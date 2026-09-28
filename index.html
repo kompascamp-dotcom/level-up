@@ -4,7 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta name="theme-color" content="#111111">
-  <title>Level UP</title>
+  <title>LEVEL UP</title>
   <style>
     * {
       box-sizing: border-box;
@@ -29,7 +29,7 @@
     }
     .subtitle {
       text-align: center;
-      color: #aaa;
+      color: #999;
       margin-bottom: 25px;
     }
     .xp-box {
@@ -39,14 +39,21 @@
       text-align: center;
       margin-bottom: 25px;
     }
-    .level {
+    .global-level {
       font-size: 28px;
       font-weight: 700;
-      margin-bottom: 5px;
     }
-    .xp {
+    .global-xp {
       color: #aaa;
-      font-size: 15px;
+      margin-top: 5px;
+    }
+    .week-box {
+      background: #1d1d1d;
+      border-radius: 16px;
+      padding: 15px;
+      text-align: center;
+      margin-bottom: 20px;
+      color: #ccc;
     }
     .directions {
       display: grid;
@@ -54,9 +61,21 @@
     }
     .card {
       background: #1d1d1d;
+      border: 1px solid #292929;
       border-radius: 20px;
       padding: 20px;
-      border: 1px solid #292929;
+      cursor: pointer;
+      transition: transform 0.15s, border 0.15s;
+    }
+    .card:active {
+      transform: scale(0.98);
+    }
+    .card.locked {
+      opacity: 0.55;
+      cursor: default;
+    }
+    .card.selected {
+      border: 2px solid white;
     }
     .card-top {
       display: flex;
@@ -72,8 +91,8 @@
     }
     .description {
       color: #999;
-      margin-top: 3px;
       font-size: 14px;
+      margin-top: 3px;
     }
     .progress {
       margin-top: 16px;
@@ -95,224 +114,491 @@
       color: #aaa;
       font-size: 13px;
     }
-    .task {
-      margin-top: 12px;
-      padding-top: 12px;
-      border-top: 1px solid #333;
+    .choose-text {
+      margin-top: 13px;
+      color: #777;
+      font-size: 13px;
+    }
+    .task-box {
+      display: none;
+      background: #f5f5f5;
+      color: #111;
+      border-radius: 22px;
+      padding: 25px 20px;
+      margin-top: 20px;
+      text-align: center;
+    }
+    .task-box.show {
+      display: block;
+    }
+    .task-icon {
+      font-size: 42px;
+    }
+    .task-title {
       font-size: 14px;
+      color: #777;
+      margin-top: 8px;
+    }
+    .task-text {
+      font-size: 21px;
+      font-weight: 700;
+      line-height: 1.35;
+      margin: 15px 0;
+    }
+    .reward {
+      font-size: 18px;
+      font-weight: 700;
+      margin-bottom: 18px;
+    }
+    .complete-btn {
+      width: 100%;
+      border: none;
+      border-radius: 15px;
+      padding: 15px;
+      background: #111;
+      color: white;
+      font-size: 17px;
+      font-weight: 700;
+      cursor: pointer;
+    }
+    .done-box {
+      display: none;
+      background: #1d1d1d;
+      border-radius: 20px;
+      padding: 25px;
+      text-align: center;
+      margin-top: 20px;
+    }
+    .done-box.show {
+      display: block;
+    }
+    .done-icon {
+      font-size: 45px;
+    }
+    .done-title {
+      font-size: 23px;
+      font-weight: 700;
+      margin-top: 10px;
+    }
+    .done-text {
+      color: #aaa;
+      margin-top: 8px;
       line-height: 1.4;
     }
     .reset {
       display: block;
-      margin: 30px auto 0;
+      margin: 35px auto 0;
       background: transparent;
       border: 1px solid #444;
-      color: #777;
-      padding: 10px 16px;
-      border-radius: 12px;
-      font-size: 12px;
-    }
-    button {
-      font-family: inherit;
+      color: #666;
+      padding: 9px 14px;
+      border-radius: 10px;
+      font-size: 11px;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <h1>LEVEL UP</h1>
-    <div class="subtitle">Развивай себя каждую неделю</div>
-    <div class="xp-box">
-      <div class="level" id="globalLevel">Уровень 1</div>
-      <div class="xp" id="globalXP">0 XP</div>
-    </div>
-    <div class="directions">
-      <!-- ДУХ -->
-      <div class="card">
-        <div class="card-top">
-          <div class="icon">✝️</div>
-          <div>
-            <div class="name">ДУХ</div>
-            <div class="description">Отношения с Богом</div>
-          </div>
-        </div>
-        <div class="progress">
-          <div class="progress-bar" id="spiritProgress"></div>
-        </div>
-        <div class="card-bottom">
-          <span id="spiritLevel">Уровень 1</span>
-          <span id="spiritXP">0 / 100 XP</span>
-        </div>
-        <div class="task" id="spiritTask">
-          Прочитать Евангелие от Иоанна, 1 главу
-        </div>
-      </div>
-      <!-- ДУША -->
-      <div class="card">
-        <div class="card-top">
-          <div class="icon">❤️</div>
-          <div>
-            <div class="name">ДУША</div>
-            <div class="description">Характер, эмоции и отношения</div>
-          </div>
-        </div>
-        <div class="progress">
-          <div class="progress-bar" id="soulProgress"></div>
-        </div>
-        <div class="card-bottom">
-          <span id="soulLevel">Уровень 1</span>
-          <span id="soulXP">0 / 100 XP</span>
-        </div>
-        <div class="task" id="soulTask">
-          Погулять 30 минут одному без телефона
-        </div>
-      </div>
-      <!-- СИЛА -->
-      <div class="card">
-        <div class="card-top">
-          <div class="icon">💪</div>
-          <div>
-            <div class="name">СИЛА</div>
-            <div class="description">Физическое развитие</div>
-          </div>
-        </div>
-        <div class="progress">
-          <div class="progress-bar" id="strengthProgress"></div>
-        </div>
-        <div class="card-bottom">
-          <span id="strengthLevel">Уровень 1</span>
-          <span id="strengthXP">0 / 100 XP</span>
-        </div>
-        <div class="task" id="strengthTask">
-          Пробежать 1 км или присесть 100 раз
-        </div>
-      </div>
-      <!-- УМ -->
-      <div class="card">
-        <div class="card-top">
-          <div class="icon">🧠</div>
-          <div>
-            <div class="name">УМ</div>
-            <div class="description">Знания и мышление</div>
-          </div>
-        </div>
-        <div class="progress">
-          <div class="progress-bar" id="mindProgress"></div>
-        </div>
-        <div class="card-bottom">
-          <span id="mindLevel">Уровень 1</span>
-          <span id="mindXP">0 / 100 XP</span>
-        </div>
-        <div class="task" id="mindTask">
-          Выучить 10 слов на одном иностранном языке
-        </div>
-      </div>
-    </div>
-    <button class="reset" onclick="resetGame()">Сбросить прогресс</button>
+<div class="container">
+  <h1>LEVEL UP</h1>
+  <div class="subtitle">Развивай себя каждую неделю</div>
+  <div class="xp-box">
+    <div class="global-level" id="globalLevel">Уровень 1</div>
+    <div class="global-xp" id="globalXP">0 XP</div>
   </div>
-  <script>
-    const game = JSON.parse(localStorage.getItem("levelUpGame")) || {
-      totalXP: 0,
-      spirit: {
-        level: 1,
-        xp: 0
+  <div class="week-box" id="weekStatus">
+    Выбери направление на эту неделю
+  </div>
+  <div class="directions">
+    <!-- ДУХ -->
+    <div class="card" id="card-spirit" onclick="chooseDirection('spirit')">
+      <div class="card-top">
+        <div class="icon">✝️</div>
+        <div>
+          <div class="name">ДУХ</div>
+          <div class="description">Отношения с Богом</div>
+        </div>
+      </div>
+      <div class="progress">
+        <div class="progress-bar" id="spiritProgress"></div>
+      </div>
+      <div class="card-bottom">
+        <span id="spiritLevel">Уровень 1</span>
+        <span id="spiritXP">0 XP</span>
+      </div>
+      <div class="choose-text">Нажми, чтобы выбрать</div>
+    </div>
+    <!-- ДУША -->
+    <div class="card" id="card-soul" onclick="chooseDirection('soul')">
+      <div class="card-top">
+        <div class="icon">❤️</div>
+        <div>
+          <div class="name">ДУША</div>
+          <div class="description">Характер, эмоции и отношения</div>
+        </div>
+      </div>
+      <div class="progress">
+        <div class="progress-bar" id="soulProgress"></div>
+      </div>
+      <div class="card-bottom">
+        <span id="soulLevel">Уровень 1</span>
+        <span id="soulXP">0 XP</span>
+      </div>
+      <div class="choose-text">Нажми, чтобы выбрать</div>
+    </div>
+    <!-- СИЛА -->
+    <div class="card" id="card-strength" onclick="chooseDirection('strength')">
+      <div class="card-top">
+        <div class="icon">💪</div>
+        <div>
+          <div class="name">СИЛА</div>
+          <div class="description">Физическое развитие</div>
+        </div>
+      </div>
+      <div class="progress">
+        <div class="progress-bar" id="strengthProgress"></div>
+      </div>
+      <div class="card-bottom">
+        <span id="strengthLevel">Уровень 1</span>
+        <span id="strengthXP">0 XP</span>
+      </div>
+      <div class="choose-text">Нажми, чтобы выбрать</div>
+    </div>
+    <!-- УМ -->
+    <div class="card" id="card-mind" onclick="chooseDirection('mind')">
+      <div class="card-top">
+        <div class="icon">🧠</div>
+        <div>
+          <div class="name">УМ</div>
+          <div class="description">Знания и мышление</div>
+        </div>
+      </div>
+      <div class="progress">
+        <div class="progress-bar" id="mindProgress"></div>
+      </div>
+      <div class="card-bottom">
+        <span id="mindLevel">Уровень 1</span>
+        <span id="mindXP">0 XP</span>
+      </div>
+      <div class="choose-text">Нажми, чтобы выбрать</div>
+    </div>
+  </div>
+  <!-- ЗАДАНИЕ -->
+  <div class="task-box" id="taskBox">
+    <div class="task-icon" id="taskIcon">✝️</div>
+    <div class="task-title" id="taskDirection">
+      ТВОЁ ЗАДАНИЕ
+    </div>
+    <div class="task-text" id="taskText">
+      Задание
+    </div>
+    <div class="reward" id="taskReward">
+      +100 XP
+    </div>
+    <button class="complete-btn" onclick="completeTask()">
+      Я выполнил
+    </button>
+  </div>
+  <!-- ПОСЛЕ ВЫПОЛНЕНИЯ -->
+  <div class="done-box" id="doneBox">
+    <div class="done-icon">🔥</div>
+    <div class="done-title">
+      Задание выполнено!
+    </div>
+    <div class="done-text" id="doneText">
+      Отличная работа!
+    </div>
+  </div>
+  <button class="reset" onclick="resetGame()">
+    Сбросить прогресс
+  </button>
+</div>
+<script>
+  const tasks = {
+    spirit: [
+      {
+        text: "Прочитать Евангелие от Иоанна, 1 главу",
+        xp: 100
       },
-      soul: {
-        level: 1,
-        xp: 0
+      {
+        text: "Запомнить Псалом 1",
+        xp: 150
       },
-      strength: {
-        level: 1,
-        xp: 0
+      {
+        text: "Сходить на собрание",
+        xp: 200
       },
-      mind: {
-        level: 1,
-        xp: 0
+      {
+        text: "Рассказать Евангелие близкому человеку",
+        xp: 250
       }
-    };
-    const tasks = {
-      spirit: [
-        "Прочитать Евангелие от Иоанна, 1 главу",
-        "Запомнить Псалом 1",
-        "Сходить на собрание",
-        "Рассказать Евангелие близкому человеку"
-      ],
-      soul: [
-        "Погулять 30 минут одному без телефона",
-        "Помочь родителям по дому 3 раза",
-        "Сделать сюрприз маме или папе",
-        "Сделать 3 добрых поступка, о которых никто не просил и за которые ничего не ожидаешь получить"
-      ],
-      strength: [
-        "Пробежать 1 км или присесть 100 раз",
-        "Пробежать 3 км или присесть 500 раз",
-        "Пробежать 5 км или сделать 2 тренировки в зале",
-        "Пробежать 3 км и сделать 2 тренировки в зале"
-      ],
-      mind: [
-        "Выучить 10 слов на одном иностранном языке (не эстонском и не английском)",
-        "Запомнить столицы 20 стран",
-        "Выучить наизусть любой стихотворный текст не из Библии",
-        "Прочитать книгу «Маленький принц»"
-      ]
-    };
-    function updateDirection(name, progressId, levelId, xpId, taskId) {
-      const direction = game[name];
-      document.getElementById(levelId).textContent =
-        "Уровень " + direction.level;
-      document.getElementById(xpId).textContent =
-        direction.xp + " XP";
-      document.getElementById(taskId).textContent =
-        tasks[name][direction.level - 1] || "Все задания выполнены 🎉";
-      let percentage = 0;
-      if (direction.level <= 4) {
-        percentage = ((direction.level - 1) / 4) * 100;
-      } else {
-        percentage = 100;
+    ],
+    soul: [
+      {
+        text: "Погулять 30 минут одному без телефона",
+        xp: 100
+      },
+      {
+        text: "Помочь родителям по дому 3 раза",
+        xp: 150
+      },
+      {
+        text: "Сделать сюрприз маме или папе",
+        xp: 200
+      },
+      {
+        text: "Сделать 3 добрых поступка, о которых никто не просил и за которые ничего не ожидаешь получить",
+        xp: 250
       }
-      document.getElementById(progressId).style.width =
-        percentage + "%";
-    }
-    function updateScreen() {
-      document.getElementById("globalXP").textContent =
-        game.totalXP + " XP";
-      document.getElementById("globalLevel").textContent =
-        "Уровень " + (Math.floor(game.totalXP / 500) + 1);
-      updateDirection(
-        "spirit",
-        "spiritProgress",
-        "spiritLevel",
-        "spiritXP",
-        "spiritTask"
-      );
-      updateDirection(
-        "soul",
-        "soulProgress",
-        "soulLevel",
-        "soulXP",
-        "soulTask"
-      );
-      updateDirection(
-        "strength",
-        "strengthProgress",
-        "strengthLevel",
-        "strengthXP",
-        "strengthTask"
-      );
-      updateDirection(
-        "mind",
-        "mindProgress",
-        "mindLevel",
-        "mindXP",
-        "mindTask"
-      );
-    }
-    function resetGame() {
-      if (confirm("Точно сбросить весь прогресс?")) {
-        localStorage.removeItem("levelUpGame");
-        location.reload();
+    ],
+    strength: [
+      {
+        text: "Пробежать 1 км или присесть 100 раз",
+        xp: 100
+      },
+      {
+        text: "Пробежать 3 км или присесть 500 раз",
+        xp: 150
+      },
+      {
+        text: "Пробежать 5 км или сделать 2 тренировки в зале",
+        xp: 200
+      },
+      {
+        text: "Пробежать 3 км и сделать 2 тренировки в зале",
+        xp: 250
       }
+    ],
+    mind: [
+      {
+        text: "Выучить 10 слов на одном иностранном языке (не эстонском и не английском)",
+        xp: 100
+      },
+      {
+        text: "Запомнить столицы 20 стран",
+        xp: 150
+      },
+      {
+        text: "Выучить наизусть любой стихотворный текст не из Библии",
+        xp: 200
+      },
+      {
+        text: "Прочитать книгу «Маленький принц»",
+        xp: 250
+      }
+    ]
+  };
+  const icons = {
+    spirit: "✝️",
+    soul: "❤️",
+    strength: "💪",
+    mind: "🧠"
+  };
+  const names = {
+    spirit: "ДУХ",
+    soul: "ДУША",
+    strength: "СИЛА",
+    mind: "УМ"
+  };
+  let game = JSON.parse(localStorage.getItem("levelUpGame")) || {
+    totalXP: 0,
+    spirit: {
+      level: 1,
+      xp: 0
+    },
+    soul: {
+      level: 1,
+      xp: 0
+    },
+    strength: {
+      level: 1,
+      xp: 0
+    },
+    mind: {
+      level: 1,
+      xp: 0
+    },
+    selectedDirection: null,
+    completedWeek: null
+  };
+  function getWeekKey() {
+    const now = new Date();
+    const firstDay = new Date(
+      now.getFullYear(),
+      0,
+      1
+    );
+    const days = Math.floor(
+      (now - firstDay) / 86400000
+    );
+    const week = Math.ceil(
+      (days + firstDay.getDay() + 1) / 7
+    );
+    return now.getFullYear() + "-W" + week;
+  }
+  function saveGame() {
+    localStorage.setItem(
+      "levelUpGame",
+      JSON.stringify(game)
+    );
+  }
+  function chooseDirection(direction) {
+    const currentWeek = getWeekKey();
+    if (game.completedWeek === currentWeek) {
+      return;
     }
+    game.selectedDirection = direction;
+    saveGame();
+    showTask();
     updateScreen();
-  </script>
+  }
+  function showTask() {
+    const direction = game.selectedDirection;
+    if (!direction) return;
+    const level = game[direction].level;
+    const task = tasks[direction][level - 1];
+    if (!task) return;
+    document.getElementById("taskBox")
+      .classList.add("show");
+    document.getElementById("taskIcon")
+      .textContent = icons[direction];
+    document.getElementById("taskDirection")
+      .textContent = names[direction] + " • УРОВЕНЬ " + level;
+    document.getElementById("taskText")
+      .textContent = task.text;
+    document.getElementById("taskReward")
+      .textContent = "+" + task.xp + " XP";
+  }
+  function completeTask() {
+    const currentWeek = getWeekKey();
+    const direction = game.selectedDirection;
+    if (!direction) return;
+    if (game.completedWeek === currentWeek) {
+      return;
+    }
+    const level = game[direction].level;
+    const task = tasks[direction][level - 1];
+    if (!task) return;
+    game[direction].xp += task.xp;
+    game.totalXP += task.xp;
+    if (game[direction].level < 4) {
+      game[direction].level++;
+    }
+    game.completedWeek = currentWeek;
+    saveGame();
+    document.getElementById("taskBox")
+      .classList.remove("show");
+    document.getElementById("doneBox")
+      .classList.add("show");
+    document.getElementById("doneText")
+      .textContent =
+      "Ты получил +" + task.xp +
+      " XP в направлении «" +
+      names[direction] +
+      "». Следующее задание будет доступно на следующей неделе.";
+    updateScreen();
+  }
+  function updateDirection(
+    name,
+    progressId,
+    levelId,
+    xpId
+  ) {
+    const direction = game[name];
+    document.getElementById(levelId)
+      .textContent =
+      "Уровень " + direction.level;
+    document.getElementById(xpId)
+      .textContent =
+      direction.xp + " XP";
+    let percentage =
+      ((direction.level - 1) / 4) * 100;
+    if (direction.level >= 4) {
+      percentage = 100;
+    }
+    document.getElementById(progressId)
+      .style.width =
+      percentage + "%";
+  }
+  function updateScreen() {
+    document.getElementById("globalXP")
+      .textContent =
+      game.totalXP + " XP";
+    document.getElementById("globalLevel")
+      .textContent =
+      "Уровень " +
+      (Math.floor(game.totalXP / 500) + 1);
+    updateDirection(
+      "spirit",
+      "spiritProgress",
+      "spiritLevel",
+      "spiritXP"
+    );
+    updateDirection(
+      "soul",
+      "soulProgress",
+      "soulLevel",
+      "soulXP"
+    );
+    updateDirection(
+      "strength",
+      "strengthProgress",
+      "strengthLevel",
+      "strengthXP"
+    );
+    updateDirection(
+      "mind",
+      "mindProgress",
+      "mindLevel",
+      "mindXP"
+    );
+    const currentWeek = getWeekKey();
+    if (game.completedWeek === currentWeek) {
+      document.getElementById("weekStatus")
+        .textContent =
+        "✅ Задание этой недели выполнено";
+      document.querySelectorAll(".card")
+        .forEach(card => {
+          card.classList.add("locked");
+        });
+    } else if (game.selectedDirection) {
+      document.getElementById("weekStatus")
+        .textContent =
+        "Твоя сфера на эту неделю: " +
+        names[game.selectedDirection];
+      document.querySelectorAll(".card")
+        .forEach(card => {
+          if (
+            card.id !==
+            "card-" + game.selectedDirection
+          ) {
+            card.classList.add("locked");
+          }
+        });
+    } else {
+      document.getElementById("weekStatus")
+        .textContent =
+        "Выбери направление на эту неделю";
+    }
+  }
+  function resetGame() {
+    if (
+      confirm(
+        "Точно сбросить весь прогресс?"
+      )
+    ) {
+      localStorage.removeItem(
+        "levelUpGame"
+      );
+      location.reload();
+    }
+  }
+  updateScreen();
+  if (
+    game.selectedDirection &&
+    game.completedWeek !== getWeekKey()
+  ) {
+    showTask();
+  }
+</script>
 </body>
 </html>
