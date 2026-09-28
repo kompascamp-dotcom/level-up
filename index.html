@@ -196,9 +196,9 @@
 
 <script>
 
-let xp = 0;
-let level = 1;
-let completed = false;
+let xp = Number(localStorage.getItem("xp")) || 0;
+let level = Number(localStorage.getItem("level")) || 1;
+let completed = localStorage.getItem("completed") === "true";
 
 function completeTask() {
 
@@ -209,6 +209,10 @@ function completeTask() {
   completed = true;
 
   xp += 100;
+
+  localStorage.setItem("xp", xp);
+localStorage.setItem("level", level);
+localStorage.setItem("completed", "true");
 
   if (xp >= 100) {
     level++;
@@ -227,6 +231,19 @@ function completeTask() {
   document.getElementById("success").style.display = "block";
 }
 
+if (completed) {
+  document.getElementById("completeButton").textContent =
+    "Задание выполнено ✓";
+
+  document.getElementById("completeButton").disabled = true;
+
+  document.getElementById("success").style.display = "block";
+}
+
+document.getElementById("level").textContent = level;
+document.getElementById("xp").textContent = xp;
+document.getElementById("progress").style.width = xp + "%";
+  
 </script>
 
 </body>
