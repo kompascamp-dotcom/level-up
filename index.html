@@ -56,9 +56,9 @@ h1 {
 }
 .progress-bar {
   height: 100%;
-  background: #fff;
+  background: white;
   width: 0%;
-  transition: width 0.3s;
+  transition: width 0.4s;
 }
 /* ЕЖЕДНЕВНЫЕ БОНУСЫ */
 .daily-box {
@@ -172,24 +172,65 @@ button {
   color: #111;
   font-size: 16px;
 }
+/* LEVEL UP ЭКРАН */
 .completed-box {
   display: none;
   background: #1d1d1d;
-  border-radius: 18px;
-  padding: 25px;
+  border-radius: 22px;
+  padding: 30px 20px;
   text-align: center;
   margin-top: 20px;
+  animation: levelUpAppear 0.5s ease;
 }
 .completed-box.show {
   display: block;
 }
-.completed-title {
-  font-size: 24px;
+@keyframes levelUpAppear {
+  0% {
+    opacity: 0;
+    transform: scale(0.85);
+  }
+  60% {
+    transform: scale(1.03);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+.levelup-icon {
+  font-size: 55px;
+  margin-bottom: 5px;
+}
+.levelup-title {
+  font-size: 34px;
+  font-weight: 900;
+  letter-spacing: 2px;
+  margin-bottom: 8px;
+}
+.levelup-subtitle {
+  color: #aaa;
+  font-size: 16px;
+}
+.reward {
+  background: #292929;
+  border-radius: 16px;
+  padding: 18px;
+  margin-top: 20px;
+}
+.reward-xp {
+  font-size: 30px;
   font-weight: bold;
 }
-.completed-text {
-  color: #aaa;
+.reward-direction {
   margin-top: 8px;
+  font-size: 16px;
+  color: #aaa;
+}
+.next-week {
+  margin-top: 18px;
+  color: #aaa;
+  line-height: 1.5;
 }
 .reset {
   width: 100%;
@@ -220,7 +261,10 @@ button {
       0 XP
     </div>
     <div class="progress">
-      <div class="progress-bar" id="globalProgress"></div>
+      <div
+        class="progress-bar"
+        id="globalProgress">
+      </div>
     </div>
   </div>
   <!-- ЕЖЕДНЕВНЫЕ БОНУСЫ -->
@@ -357,14 +401,35 @@ button {
       id="mindTask">
     </div>
   </div>
+  <!-- LEVEL UP -->
   <div
     class="completed-box"
     id="completedBox">
-    <div class="completed-title">
-      🎉 Задание выполнено!
+    <div class="levelup-icon">
+      🎉
     </div>
-    <div class="completed-text">
-      Следующее основное задание будет доступно на следующей неделе.
+    <div class="levelup-title">
+      LEVEL UP!
+    </div>
+    <div class="levelup-subtitle">
+      Ты выполнил недельное задание
+    </div>
+    <div class="reward">
+      <div
+        class="reward-xp"
+        id="rewardXP">
+        +100 XP
+      </div>
+      <div
+        class="reward-direction"
+        id="rewardDirection">
+        ✝️ ДУХ → Уровень 2
+      </div>
+    </div>
+    <div class="next-week">
+      Отличная работа! 💪<br>
+      Новое основное задание появится
+      на следующей неделе.
     </div>
   </div>
   <button
@@ -455,6 +520,15 @@ const tasks = {
   ]
 };
 /* =========================
+   НАЗВАНИЯ
+========================= */
+const directionNames = {
+  spirit: "✝️ ДУХ",
+  soul: "❤️ ДУША",
+  strength: "💪 СИЛА",
+  mind: "🧠 УМ"
+};
+/* =========================
    СОСТОЯНИЕ
 ========================= */
 let state = JSON.parse(
@@ -479,6 +553,7 @@ let state = JSON.parse(
   },
   selectedDirection: null,
   completedWeek: null,
+  completedReward: null,
   daily: {
     date: null,
     prayer: false,
@@ -550,7 +625,7 @@ function getDailyBonus(type) {
   updateUI();
 }
 /* =========================
-   НАПРАВЛЕНИЕ
+   ВЫБОР НАПРАВЛЕНИЯ
 ========================= */
 function selectDirection(direction) {
   const week = getWeekKey();
@@ -571,7 +646,8 @@ function selectDirection(direction) {
    ВЫПОЛНЕНИЕ ЗАДАНИЯ
 ========================= */
 function completeTask() {
-  const direction = state.selectedDirection;
+  const direction =
+    state.selectedDirection;
   if (!direction) {
     return;
   }
@@ -589,6 +665,12 @@ function completeTask() {
     state[direction].level++;
   }
   state.completedWeek = week;
+  state.completedReward = {
+    xp: task.xp,
+    direction: direction,
+    newLevel:
+      state[direction].level
+  };
   save();
   updateUI();
 }
@@ -616,22 +698,38 @@ function updateUI() {
     (currentXP / 500 * 100) + "%";
   /* DAILY */
   const prayerButton =
-    document.getElementById("prayerButton");
+    document.getElementById(
+      "prayerButton"
+    );
   const bibleButton =
-    document.getElementById("bibleButton");
+    document.getElementById(
+      "bibleButton"
+    );
   if (state.daily.prayer) {
-    prayerButton.textContent = "✓ Получено";
-    prayerButton.classList.add("done");
+    prayerButton.textContent =
+      "✓ Получено";
+    prayerButton.classList.add(
+      "done"
+    );
   } else {
-    prayerButton.textContent = "+10 XP";
-    prayerButton.classList.remove("done");
+    prayerButton.textContent =
+      "+10 XP";
+    prayerButton.classList.remove(
+      "done"
+    );
   }
   if (state.daily.bible) {
-    bibleButton.textContent = "✓ Получено";
-    bibleButton.classList.add("done");
+    bibleButton.textContent =
+      "✓ Получено";
+    bibleButton.classList.add(
+      "done"
+    );
   } else {
-    bibleButton.textContent = "+10 XP";
-    bibleButton.classList.remove("done");
+    bibleButton.textContent =
+      "+10 XP";
+    bibleButton.classList.remove(
+      "done"
+    );
   }
   /* DIRECTIONS */
   const directions = [
@@ -640,72 +738,112 @@ function updateUI() {
     "strength",
     "mind"
   ];
-  const week = getWeekKey();
+  const week =
+    getWeekKey();
   const weekCompleted =
     state.completedWeek === week;
-  directions.forEach(direction => {
-    const data = state[direction];
-    document.getElementById(
-      direction + "Level"
-    ).textContent =
-      data.level;
-    document.getElementById(
-      direction + "XP"
-    ).textContent =
-      data.xp + " XP";
-    const card =
-      document.getElementById(direction);
-    const taskBox =
+  directions.forEach(
+    direction => {
+      const data =
+        state[direction];
       document.getElementById(
-        direction + "Task"
+        direction + "Level"
+      ).textContent =
+        data.level;
+      document.getElementById(
+        direction + "XP"
+      ).textContent =
+        data.xp + " XP";
+      const card =
+        document.getElementById(
+          direction
+        );
+      const taskBox =
+        document.getElementById(
+          direction + "Task"
+        );
+      card.classList.remove(
+        "selected",
+        "locked"
       );
-    card.classList.remove(
-      "selected",
-      "locked"
-    );
-    taskBox.classList.remove("show");
-    taskBox.innerHTML = "";
-    if (weekCompleted) {
-      card.classList.add("locked");
-      return;
+      taskBox.classList.remove(
+        "show"
+      );
+      taskBox.innerHTML = "";
+      if (weekCompleted) {
+        card.classList.add(
+          "locked"
+        );
+        return;
+      }
+      if (
+        state.selectedDirection &&
+        state.selectedDirection !== direction
+      ) {
+        card.classList.add(
+          "locked"
+        );
+        return;
+      }
+      if (
+        state.selectedDirection === direction
+      ) {
+        card.classList.add(
+          "selected"
+        );
+        const task =
+          tasks[direction][
+            data.level - 1
+          ];
+        taskBox.innerHTML = `
+          <div class="task-title">
+            ТВОЁ ЗАДАНИЕ • ${task.xp} XP
+          </div>
+          <div class="task-text">
+            ${task.text}
+          </div>
+          <button
+            class="complete-button"
+            onclick="completeTask()">
+            Я выполнил
+          </button>
+        `;
+        taskBox.classList.add(
+          "show"
+        );
+      }
     }
-    if (
-      state.selectedDirection &&
-      state.selectedDirection !== direction
-    ) {
-      card.classList.add("locked");
-      return;
-    }
-    if (
-      state.selectedDirection === direction
-    ) {
-      card.classList.add("selected");
-      const task =
-        tasks[direction][data.level - 1];
-      taskBox.innerHTML = `
-        <div class="task-title">
-          ТВОЁ ЗАДАНИЕ • ${task.xp} XP
-        </div>
-        <div class="task-text">
-          ${task.text}
-        </div>
-        <button
-          class="complete-button"
-          onclick="completeTask()">
-          Я выполнил
-        </button>
-      `;
-      taskBox.classList.add("show");
-    }
-  });
+  );
+  /* LEVEL UP */
   const completedBox =
     document.getElementById(
       "completedBox"
     );
-  if (weekCompleted) {
-    completedBox.classList.add("show");
+  if (
+    weekCompleted &&
+    state.completedReward
+  ) {
+    completedBox.classList.add(
+      "show"
+    );
+    document.getElementById(
+      "rewardXP"
+    ).textContent =
+      "+" +
+      state.completedReward.xp +
+      " XP";
+    document.getElementById(
+      "rewardDirection"
+    ).textContent =
+      directionNames[
+        state.completedReward.direction
+      ] +
+      " → Уровень " +
+      state.completedReward.newLevel;
   } else {
-    completedBox.classList.remove("show");
+    completedBox.classList.remove(
+      "show"
+    );
   }
 }
 /* =========================
