@@ -3,248 +3,316 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#111827">
-
+  <meta name="theme-color" content="#111111">
   <title>Level UP</title>
-
   <style>
     * {
       box-sizing: border-box;
     }
-
     body {
       margin: 0;
-      min-height: 100vh;
-      font-family: Arial, sans-serif;
-      background: #111827;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #111;
       color: white;
+      min-height: 100vh;
     }
-
-    .app {
-      max-width: 500px;
+    .container {
+      max-width: 600px;
       margin: auto;
-      padding: 25px 20px;
+      padding: 25px 18px 40px;
     }
-
-    .logo {
+    h1 {
       text-align: center;
-      font-size: 36px;
-      font-weight: 900;
+      font-size: 42px;
+      margin: 10px 0 5px;
       letter-spacing: 2px;
-      margin-top: 20px;
     }
-
     .subtitle {
       text-align: center;
-      color: #9ca3af;
-      margin: 8px 0 30px;
+      color: #aaa;
+      margin-bottom: 25px;
     }
-
-    .card {
-      background: #1f2937;
-      border-radius: 24px;
-      padding: 24px;
-      margin-bottom: 18px;
+    .xp-box {
+      background: #1d1d1d;
+      border-radius: 20px;
+      padding: 20px;
+      text-align: center;
+      margin-bottom: 25px;
     }
-
-    .label {
-      color: #9ca3af;
-      font-size: 13px;
-      margin-bottom: 8px;
-    }
-
     .level {
-      font-size: 30px;
-      font-weight: bold;
+      font-size: 28px;
+      font-weight: 700;
+      margin-bottom: 5px;
     }
-
     .xp {
-      margin-top: 6px;
-      color: #9ca3af;
+      color: #aaa;
+      font-size: 15px;
     }
-
+    .directions {
+      display: grid;
+      gap: 15px;
+    }
+    .card {
+      background: #1d1d1d;
+      border-radius: 20px;
+      padding: 20px;
+      border: 1px solid #292929;
+    }
+    .card-top {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+    .icon {
+      font-size: 35px;
+    }
+    .name {
+      font-size: 22px;
+      font-weight: 700;
+    }
+    .description {
+      color: #999;
+      margin-top: 3px;
+      font-size: 14px;
+    }
     .progress {
-      height: 10px;
-      background: #374151;
-      border-radius: 10px;
       margin-top: 16px;
+      height: 8px;
+      background: #333;
+      border-radius: 10px;
       overflow: hidden;
     }
-
     .progress-bar {
       height: 100%;
       width: 0%;
-      background: #22c55e;
-      transition: width 0.4s;
+      background: white;
+      transition: width 0.3s;
     }
-
-    .week {
-      color: #9ca3af;
+    .card-bottom {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 10px;
+      color: #aaa;
       font-size: 13px;
-      margin-bottom: 10px;
     }
-
-    .task-title {
-      font-size: 25px;
-      font-weight: bold;
-      margin-bottom: 12px;
-    }
-
     .task {
-      color: #d1d5db;
-      line-height: 1.5;
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid #333;
+      font-size: 14px;
+      line-height: 1.4;
     }
-
+    .reset {
+      display: block;
+      margin: 30px auto 0;
+      background: transparent;
+      border: 1px solid #444;
+      color: #777;
+      padding: 10px 16px;
+      border-radius: 12px;
+      font-size: 12px;
+    }
     button {
-      width: 100%;
-      border: none;
-      border-radius: 16px;
-      padding: 17px;
-      margin-top: 22px;
-      background: #22c55e;
-      color: #052e16;
-      font-size: 17px;
-      font-weight: bold;
-      cursor: pointer;
-    }
-
-    button:disabled {
-      background: #374151;
-      color: #9ca3af;
-      cursor: default;
-    }
-
-    .success {
-      display: none;
-      margin-top: 18px;
-      padding: 15px;
-      border-radius: 14px;
-      background: #14532d;
-      color: #bbf7d0;
-      text-align: center;
-      font-weight: bold;
-    }
-
-    .footer {
-      text-align: center;
-      color: #6b7280;
-      font-size: 13px;
-      margin-top: 30px;
+      font-family: inherit;
     }
   </style>
 </head>
-
 <body>
-
-<div class="app">
-
-  <div class="logo">LEVEL UP</div>
-
-  <div class="subtitle">
-    Стань лучше. Шаг за шагом.
+  <div class="container">
+    <h1>LEVEL UP</h1>
+    <div class="subtitle">Развивай себя каждую неделю</div>
+    <div class="xp-box">
+      <div class="level" id="globalLevel">Уровень 1</div>
+      <div class="xp" id="globalXP">0 XP</div>
+    </div>
+    <div class="directions">
+      <!-- ДУХ -->
+      <div class="card">
+        <div class="card-top">
+          <div class="icon">✝️</div>
+          <div>
+            <div class="name">ДУХ</div>
+            <div class="description">Отношения с Богом</div>
+          </div>
+        </div>
+        <div class="progress">
+          <div class="progress-bar" id="spiritProgress"></div>
+        </div>
+        <div class="card-bottom">
+          <span id="spiritLevel">Уровень 1</span>
+          <span id="spiritXP">0 / 100 XP</span>
+        </div>
+        <div class="task" id="spiritTask">
+          Прочитать Евангелие от Иоанна, 1 главу
+        </div>
+      </div>
+      <!-- ДУША -->
+      <div class="card">
+        <div class="card-top">
+          <div class="icon">❤️</div>
+          <div>
+            <div class="name">ДУША</div>
+            <div class="description">Характер, эмоции и отношения</div>
+          </div>
+        </div>
+        <div class="progress">
+          <div class="progress-bar" id="soulProgress"></div>
+        </div>
+        <div class="card-bottom">
+          <span id="soulLevel">Уровень 1</span>
+          <span id="soulXP">0 / 100 XP</span>
+        </div>
+        <div class="task" id="soulTask">
+          Погулять 30 минут одному без телефона
+        </div>
+      </div>
+      <!-- СИЛА -->
+      <div class="card">
+        <div class="card-top">
+          <div class="icon">💪</div>
+          <div>
+            <div class="name">СИЛА</div>
+            <div class="description">Физическое развитие</div>
+          </div>
+        </div>
+        <div class="progress">
+          <div class="progress-bar" id="strengthProgress"></div>
+        </div>
+        <div class="card-bottom">
+          <span id="strengthLevel">Уровень 1</span>
+          <span id="strengthXP">0 / 100 XP</span>
+        </div>
+        <div class="task" id="strengthTask">
+          Пробежать 1 км или присесть 100 раз
+        </div>
+      </div>
+      <!-- УМ -->
+      <div class="card">
+        <div class="card-top">
+          <div class="icon">🧠</div>
+          <div>
+            <div class="name">УМ</div>
+            <div class="description">Знания и мышление</div>
+          </div>
+        </div>
+        <div class="progress">
+          <div class="progress-bar" id="mindProgress"></div>
+        </div>
+        <div class="card-bottom">
+          <span id="mindLevel">Уровень 1</span>
+          <span id="mindXP">0 / 100 XP</span>
+        </div>
+        <div class="task" id="mindTask">
+          Выучить 10 слов на одном иностранном языке
+        </div>
+      </div>
+    </div>
+    <button class="reset" onclick="resetGame()">Сбросить прогресс</button>
   </div>
-
-  <div class="card">
-
-    <div class="label">ТВОЙ УРОВЕНЬ</div>
-
-    <div class="level">
-      Уровень <span id="level">1</span>
-    </div>
-
-    <div class="xp">
-      <span id="xp">0</span> / 100 XP
-    </div>
-
-    <div class="progress">
-      <div class="progress-bar" id="progress"></div>
-    </div>
-
-  </div>
-
-  <div class="card">
-
-    <div class="week">
-      ЗАДАНИЕ НЕДЕЛИ
-    </div>
-
-    <div class="task-title">
-      Первый шаг
-    </div>
-
-    <div class="task">
-      Сделай сегодня что-нибудь, что ты давно откладывал.
-      Маленький шаг тоже считается.
-    </div>
-
-    <button id="completeButton" onclick="completeTask()">
-      Я выполнил
-    </button>
-
-    <div class="success" id="success">
-      🎉 Задание выполнено!<br>
-      +100 XP
-    </div>
-
-  </div>
-
-  <div class="footer">
-    Level UP • Развивайся каждую неделю
-  </div>
-
-</div>
-
-<script>
-
-let xp = Number(localStorage.getItem("xp")) || 0;
-let level = Number(localStorage.getItem("level")) || 1;
-let completed = localStorage.getItem("completed") === "true";
-
-function completeTask() {
-
-  if (completed) {
-    return;
-  }
-
-  completed = true;
-
-  xp += 100;
-
-  localStorage.setItem("xp", xp);
-localStorage.setItem("level", level);
-localStorage.setItem("completed", "true");
-
-  if (xp >= 100) {
-    level++;
-    xp = 0;
-  }
-
-  document.getElementById("level").textContent = level;
-  document.getElementById("xp").textContent = xp;
-  document.getElementById("progress").style.width = xp + "%";
-
-  document.getElementById("completeButton").textContent =
-    "Задание выполнено ✓";
-
-  document.getElementById("completeButton").disabled = true;
-
-  document.getElementById("success").style.display = "block";
-}
-
-if (completed) {
-  document.getElementById("completeButton").textContent =
-    "Задание выполнено ✓";
-
-  document.getElementById("completeButton").disabled = true;
-
-  document.getElementById("success").style.display = "block";
-}
-
-document.getElementById("level").textContent = level;
-document.getElementById("xp").textContent = xp;
-document.getElementById("progress").style.width = xp + "%";
-  
-</script>
-
+  <script>
+    const game = JSON.parse(localStorage.getItem("levelUpGame")) || {
+      totalXP: 0,
+      spirit: {
+        level: 1,
+        xp: 0
+      },
+      soul: {
+        level: 1,
+        xp: 0
+      },
+      strength: {
+        level: 1,
+        xp: 0
+      },
+      mind: {
+        level: 1,
+        xp: 0
+      }
+    };
+    const tasks = {
+      spirit: [
+        "Прочитать Евангелие от Иоанна, 1 главу",
+        "Запомнить Псалом 1",
+        "Сходить на собрание",
+        "Рассказать Евангелие близкому человеку"
+      ],
+      soul: [
+        "Погулять 30 минут одному без телефона",
+        "Помочь родителям по дому 3 раза",
+        "Сделать сюрприз маме или папе",
+        "Сделать 3 добрых поступка, о которых никто не просил и за которые ничего не ожидаешь получить"
+      ],
+      strength: [
+        "Пробежать 1 км или присесть 100 раз",
+        "Пробежать 3 км или присесть 500 раз",
+        "Пробежать 5 км или сделать 2 тренировки в зале",
+        "Пробежать 3 км и сделать 2 тренировки в зале"
+      ],
+      mind: [
+        "Выучить 10 слов на одном иностранном языке (не эстонском и не английском)",
+        "Запомнить столицы 20 стран",
+        "Выучить наизусть любой стихотворный текст не из Библии",
+        "Прочитать книгу «Маленький принц»"
+      ]
+    };
+    function updateDirection(name, progressId, levelId, xpId, taskId) {
+      const direction = game[name];
+      document.getElementById(levelId).textContent =
+        "Уровень " + direction.level;
+      document.getElementById(xpId).textContent =
+        direction.xp + " XP";
+      document.getElementById(taskId).textContent =
+        tasks[name][direction.level - 1] || "Все задания выполнены 🎉";
+      let percentage = 0;
+      if (direction.level <= 4) {
+        percentage = ((direction.level - 1) / 4) * 100;
+      } else {
+        percentage = 100;
+      }
+      document.getElementById(progressId).style.width =
+        percentage + "%";
+    }
+    function updateScreen() {
+      document.getElementById("globalXP").textContent =
+        game.totalXP + " XP";
+      document.getElementById("globalLevel").textContent =
+        "Уровень " + (Math.floor(game.totalXP / 500) + 1);
+      updateDirection(
+        "spirit",
+        "spiritProgress",
+        "spiritLevel",
+        "spiritXP",
+        "spiritTask"
+      );
+      updateDirection(
+        "soul",
+        "soulProgress",
+        "soulLevel",
+        "soulXP",
+        "soulTask"
+      );
+      updateDirection(
+        "strength",
+        "strengthProgress",
+        "strengthLevel",
+        "strengthXP",
+        "strengthTask"
+      );
+      updateDirection(
+        "mind",
+        "mindProgress",
+        "mindLevel",
+        "mindXP",
+        "mindTask"
+      );
+    }
+    function resetGame() {
+      if (confirm("Точно сбросить весь прогресс?")) {
+        localStorage.removeItem("levelUpGame");
+        location.reload();
+      }
+    }
+    updateScreen();
+  </script>
 </body>
 </html>
