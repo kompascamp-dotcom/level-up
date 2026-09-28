@@ -3,16 +3,174 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#111827">
+
   <title>Level UP</title>
+
+  <style>
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Arial, sans-serif;
+      background: #111827;
+      color: white;
+    }
+
+    .app {
+      max-width: 500px;
+      margin: 0 auto;
+      padding: 25px 20px;
+    }
+
+    .logo {
+      text-align: center;
+      font-size: 36px;
+      font-weight: 900;
+      letter-spacing: 2px;
+      margin-top: 25px;
+    }
+
+    .subtitle {
+      text-align: center;
+      color: #9ca3af;
+      margin-top: 8px;
+      margin-bottom: 35px;
+    }
+
+    .card {
+      background: #1f2937;
+      border-radius: 24px;
+      padding: 25px;
+      margin-bottom: 18px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.25);
+    }
+
+    .level {
+      font-size: 14px;
+      color: #9ca3af;
+      margin-bottom: 8px;
+    }
+
+    .level-number {
+      font-size: 32px;
+      font-weight: bold;
+    }
+
+    .progress {
+      height: 10px;
+      background: #374151;
+      border-radius: 10px;
+      overflow: hidden;
+      margin-top: 15px;
+    }
+
+    .progress-bar {
+      width: 25%;
+      height: 100%;
+      background: #22c55e;
+      border-radius: 10px;
+    }
+
+    .week {
+      color: #9ca3af;
+      font-size: 14px;
+      margin-bottom: 10px;
+    }
+
+    .task-title {
+      font-size: 24px;
+      font-weight: bold;
+      margin-bottom: 12px;
+    }
+
+    .task-text {
+      color: #d1d5db;
+      line-height: 1.5;
+    }
+
+    .button {
+      display: block;
+      width: 100%;
+      border: none;
+      border-radius: 16px;
+      padding: 16px;
+      margin-top: 20px;
+      background: #22c55e;
+      color: #052e16;
+      font-size: 17px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    .button:active {
+      transform: scale(0.98);
+    }
+
+    .bottom {
+      text-align: center;
+      color: #6b7280;
+      font-size: 13px;
+      margin-top: 30px;
+    }
+  </style>
 </head>
 
 <body>
 
-  <h1>LEVEL UP</h1>
+  <div class="app">
 
-  <p>Твоё задание на эту неделю</p>
+    <div class="logo">
+      LEVEL UP
+    </div>
 
-  <h2>Добро пожаловать!</h2>
+    <div class="subtitle">
+      Стань лучше. Шаг за шагом.
+    </div>
+
+    <div class="card">
+      <div class="level">
+        ТВОЙ УРОВЕНЬ
+      </div>
+
+      <div class="level-number">
+        Уровень 1
+      </div>
+
+      <div class="progress">
+        <div class="progress-bar"></div>
+      </div>
+    </div>
+
+    <div class="card">
+
+      <div class="week">
+        ЗАДАНИЕ НЕДЕЛИ
+      </div>
+
+      <div class="task-title">
+        Первый шаг
+      </div>
+
+      <div class="task-text">
+        Сделай сегодня что-нибудь, что ты давно откладывал.
+        Маленький шаг тоже считается.
+      </div>
+
+      <button class="button">
+        Я выполнил
+      </button>
+
+    </div>
+
+    <div class="bottom">
+      Level UP • Развивайся каждую неделю
+    </div>
+
+  </div>
 
 </body>
 </html>
