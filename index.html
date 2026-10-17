@@ -1,870 +1,151 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="ru">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>LEVEL UP</title>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#111022"><title>чайвстречай — игра в имена</title>
 <style>
-* {
-  box-sizing: border-box;
-}
-body {
-  margin: 0;
-  font-family: Arial, sans-serif;
-  background: #111;
-  color: white;
-  min-height: 100vh;
-  padding: 20px;
-}
-.container {
-  max-width: 600px;
-  margin: auto;
-}
-h1 {
-  text-align: center;
-  font-size: 42px;
-  margin: 10px 0 5px;
-  letter-spacing: 3px;
-}
-.subtitle {
-  text-align: center;
-  color: #aaa;
-  margin-bottom: 25px;
-}
-/* ОБЩИЙ ПРОГРЕСС */
-.global-box {
-  background: #1d1d1d;
-  border-radius: 18px;
-  padding: 20px;
-  margin-bottom: 20px;
-  text-align: center;
-}
-.global-level {
-  font-size: 24px;
-  font-weight: bold;
-}
-.global-xp {
-  color: #aaa;
-  margin-top: 5px;
-}
-.progress {
-  height: 10px;
-  background: #333;
-  border-radius: 10px;
-  overflow: hidden;
-  margin-top: 15px;
-}
-.progress-bar {
-  height: 100%;
-  background: white;
-  width: 0%;
-  transition: width 0.4s;
-}
-/* ЕЖЕДНЕВНЫЕ БОНУСЫ */
-.daily-box {
-  background: #1d1d1d;
-  border-radius: 18px;
-  padding: 20px;
-  margin-bottom: 20px;
-}
-.daily-title {
-  font-size: 20px;
-  font-weight: bold;
-  margin-bottom: 15px;
-}
-.daily-item {
-  background: #292929;
-  border-radius: 14px;
-  padding: 15px;
-  margin-top: 10px;
-}
-.daily-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 10px;
-}
-.daily-name {
-  font-size: 17px;
-}
-.daily-xp {
-  color: #aaa;
-  font-size: 14px;
-  margin-top: 4px;
-}
-button {
-  border: none;
-  border-radius: 10px;
-  padding: 10px 14px;
-  font-weight: bold;
-  cursor: pointer;
-}
-.daily-button {
-  background: white;
-  color: #111;
-}
-.daily-button.done {
-  background: #444;
-  color: #aaa;
-  cursor: default;
-}
-/* НАПРАВЛЕНИЯ */
-.section-title {
-  font-size: 20px;
-  font-weight: bold;
-  margin: 25px 0 12px;
-}
-.direction {
-  background: #1d1d1d;
-  border-radius: 18px;
-  padding: 18px;
-  margin-bottom: 12px;
-  cursor: pointer;
-  transition: 0.2s;
-}
-.direction:hover {
-  transform: scale(1.01);
-}
-.direction.selected {
-  outline: 2px solid white;
-}
-.direction.locked {
-  opacity: 0.45;
-  cursor: default;
-}
-.direction-top {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.direction-name {
-  font-size: 20px;
-  font-weight: bold;
-}
-.direction-xp {
-  color: #aaa;
-  font-size: 14px;
-  margin-top: 5px;
-}
-.task {
-  display: none;
-  background: #292929;
-  border-radius: 15px;
-  padding: 18px;
-  margin-top: 12px;
-}
-.task.show {
-  display: block;
-}
-.task-title {
-  color: #aaa;
-  font-size: 13px;
-  margin-bottom: 8px;
-}
-.task-text {
-  font-size: 18px;
-  line-height: 1.4;
-  margin-bottom: 15px;
-}
-.complete-button {
-  width: 100%;
-  background: white;
-  color: #111;
-  font-size: 16px;
-}
-/* LEVEL UP ЭКРАН */
-.completed-box {
-  display: none;
-  background: #1d1d1d;
-  border-radius: 22px;
-  padding: 30px 20px;
-  text-align: center;
-  margin-top: 20px;
-  animation: levelUpAppear 0.5s ease;
-}
-.completed-box.show {
-  display: block;
-}
-@keyframes levelUpAppear {
-  0% {
-    opacity: 0;
-    transform: scale(0.85);
-  }
-  60% {
-    transform: scale(1.03);
-  }
-  100% {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-.levelup-icon {
-  font-size: 55px;
-  margin-bottom: 5px;
-}
-.levelup-title {
-  font-size: 34px;
-  font-weight: 900;
-  letter-spacing: 2px;
-  margin-bottom: 8px;
-}
-.levelup-subtitle {
-  color: #aaa;
-  font-size: 16px;
-}
-.reward {
-  background: #292929;
-  border-radius: 16px;
-  padding: 18px;
-  margin-top: 20px;
-}
-.reward-xp {
-  font-size: 30px;
-  font-weight: bold;
-}
-.reward-direction {
-  margin-top: 8px;
-  font-size: 16px;
-  color: #aaa;
-}
-.next-week {
-  margin-top: 18px;
-  color: #aaa;
-  line-height: 1.5;
-}
-.reset {
-  width: 100%;
-  margin-top: 30px;
-  background: #292929;
-  color: #aaa;
-}
-.info {
-  text-align: center;
-  color: #777;
-  font-size: 13px;
-  margin-top: 15px;
-}
+:root{--ink:#f7f3ff;--muted:#b7b2ca;--bg:#111022;--panel:#1c1a31;--edge:#393653;--purple:#a78bfa;--pink:#ff70c8;--lime:#c8ff56}*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 50% -12%,#38315c 0,transparent 48%),var(--bg);color:var(--ink);font:16px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif;min-height:100vh}.wrap{width:min(100% - 32px,640px);margin:0 auto;padding:24px 0 48px}.brand{text-align:center;margin:16px 0 24px}.logo{display:inline-flex;align-items:center;gap:10px;font-weight:900;font-size:clamp(27px,7vw,40px);letter-spacing:-1.6px;color:var(--ink);text-shadow:0 0 24px #b897ff55}.cup{display:grid;place-items:center;width:46px;height:46px;border-radius:16px;background:linear-gradient(135deg,var(--pink),var(--purple));font-size:25px;box-shadow:0 0 28px #c277f055}.tag{color:var(--muted);margin:5px 0}.verse{max-width:500px;margin:14px auto 0;padding:10px 16px;border-top:1px solid #a78bfa55;color:#e4dcff;font-size:14px;font-style:italic}.verse cite{display:block;margin-top:4px;color:#aaa2c8;font-size:12px;font-style:normal}.card{background:linear-gradient(145deg,#211f39,#19172c);border:1px solid var(--edge);border-radius:24px;padding:clamp(18px,5vw,30px);box-shadow:0 18px 55px #05040c77}h1{font-size:24px;line-height:1.2;margin:0 0 8px}p{margin:0 0 18px;color:var(--muted)}.instructions{background:#a78bfa18;border:1px solid #a78bfa4a;border-radius:14px;padding:13px 15px;margin:16px 0 20px;font-size:14px;color:#e7e0ff}.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px}.cell{width:100%;min-width:0;height:clamp(61px,16vw,86px);text-align:center;border:1.5px solid var(--edge);border-radius:14px;background:#29263f;color:var(--ink);font:600 14px system-ui;padding:5px}.cell::placeholder{color:#918ba8;font-weight:450}.cell:focus{outline:3px solid #a78bfa77;border-color:var(--purple)}.cell:disabled{opacity:1;cursor:default;color:var(--ink);-webkit-text-fill-color:var(--ink);background:#29263f}.cell.marked{background:#c8ff5622;border-color:var(--lime);color:var(--lime);text-decoration:line-through;text-decoration-thickness:2px;box-shadow:0 0 18px #c8ff5622}.actions{display:flex;gap:10px;margin-top:20px}.button{border:0;border-radius:14px;padding:14px 18px;font:750 15px system-ui;cursor:pointer;transition:transform .15s,filter .15s}.button:hover{transform:translateY(-1px);filter:brightness(1.1)}.primary{background:linear-gradient(100deg,var(--purple),var(--pink));color:#171326;flex:1}.secondary{background:#302d49;color:var(--ink);border:1px solid var(--edge)}.status{display:none;margin-top:17px;padding:13px 15px;border-radius:14px;background:#c8ff5620;border:1px solid var(--lime);color:var(--lime);font-weight:750}.status.show{display:block}.hint{text-align:center;font-size:13px;color:var(--muted);margin:15px 0 0}.footer{text-align:center;color:#858099;font-size:12px;margin-top:18px}.hidden{display:none!important}@media(max-width:380px){.grid{gap:6px}.cell{border-radius:11px;font-size:12px}.actions{flex-direction:column}}
+.meetgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin:20px 0}.meet-slot{background:#29263f;border:1px solid var(--edge);border-radius:14px;padding:9px;text-align:center}.meet-slot label{display:block;color:var(--muted);font-size:12px;margin-bottom:5px}.meet-slot b{display:block;color:var(--lime);font-size:20px}.meet-slot input{width:100%;min-width:0;border:0;border-radius:8px;background:#1b192d;color:var(--ink);text-align:center;font:600 14px system-ui;padding:9px 4px}.meet-slot input::placeholder{color:#918ba8;font-weight:400}.meet-slot input:focus{outline:2px solid var(--purple)}.meet-note{border:1px solid #a78bfa4a;background:#a78bfa18;border-radius:14px;padding:13px 15px;color:#e7e0ff;font-size:14px;margin:15px 0}.clock-mark{text-align:center;font-size:29px;margin:12px 0 -10px}@media(max-width:380px){.meetgrid{gap:6px}.meet-slot{padding:7px 4px}.meet-slot input{font-size:12px}}
 </style>
 </head>
 <body>
-<div class="container">
-  <h1>LEVEL UP</h1>
-  <div class="subtitle">
-    Развивайся каждую неделю
+<main class="wrap">
+<header class="brand">
+  <div class="logo"><span class="cup">☕</span>чайвстречай</div>
+  <div class="tag">Играем, знакомимся, отмечаем совпадения</div>
+  <div class="verse">«Кто хочет иметь друзей, тот и сам должен быть дружелюбным.»<cite>Притчи 18:24</cite></div>
+</header>
+
+<section class="card">
+  <div id="setup">
+    <h1>Заполни своё поле</h1>
+    <p>Впиши в клетки 16 имён — по одному в каждую.</p>
+    <div class="instructions">Слушай ведущего. Услышал имя из своего поля — нажми на эту клетку. Собери 4 отмеченных имени подряд по горизонтали, вертикали или диагонали и объяви: «Чайвстречай!»</div>
+    <div class="grid" id="entry"></div>
+    <div class="actions"><button class="button primary" id="begin">Готово, начать игру</button></div>
   </div>
-  <!-- ОБЩИЙ ПРОГРЕСС -->
-  <div class="global-box">
-    <div class="global-level" id="globalLevel">
-      Уровень 1
+
+  <div id="play" class="hidden">
+    <h1>Твоё поле</h1>
+    <p>Нажимай на имя, когда ведущий его назовёт.</p>
+    <div class="grid" id="board"></div>
+    <div id="win" class="status" role="status">🎉 Чайвстречай! У тебя есть выигрышная линия из четырёх имён.</div>
+    <div class="actions">
+      <button class="button secondary" id="edit">Изменить имена</button>
+      <button class="button secondary" id="reset">Сбросить отметки</button>
     </div>
-    <div class="global-xp" id="globalXP">
-      0 XP
-    </div>
-    <div class="progress">
-      <div
-        class="progress-bar"
-        id="globalProgress">
-      </div>
-    </div>
+    <div class="hint">Нашёл линию? Сразу сообщи ведущему.</div>
+    <div class="actions"><button class="button primary" id="toMeet">Перейти к игре знакомств →</button></div>
   </div>
-  <!-- ЕЖЕДНЕВНЫЕ БОНУСЫ -->
-  <div class="daily-box">
-    <div class="daily-title">
-      ⚡ Ежедневный бонус
-    </div>
-    <div class="daily-item">
-      <div class="daily-row">
-        <div>
-          <div class="daily-name">
-            🙏 Молитва
-          </div>
-          <div class="daily-xp">
-            +10 XP • 1 раз в день
-          </div>
-        </div>
-        <button
-          class="daily-button"
-          id="prayerButton"
-          onclick="getDailyBonus('prayer')">
-          +10 XP
-        </button>
-      </div>
-    </div>
-    <div class="daily-item">
-      <div class="daily-row">
-        <div>
-          <div class="daily-name">
-            📖 Чтение Библии
-          </div>
-          <div class="daily-xp">
-            +10 XP • 1 раз в день
-          </div>
-        </div>
-        <button
-          class="daily-button"
-          id="bibleButton"
-          onclick="getDailyBonus('bible')">
-          +10 XP
-        </button>
-      </div>
-    </div>
+
+  <div id="meetGame" class="card hidden" style="margin-top:16px">
+    <h1>Часы знакомств</h1>
+    <p>Встретьтесь и договоритесь, с кем хотите пообщаться в каждый час.</p>
+    <div class="meet-note">Познакомься с ребятами и запиши имя рядом с часом только после того, как вы договорились встретиться. Например, когда ведущий объявит «встреча на 2 часа», найди человека, чьё имя у тебя записано напротив 2, и обсудите вопрос ведущего.</div>
+    <div class="clock-mark">🕛</div>
+    <div class="meetgrid" id="meetgrid"></div>
+    <div class="actions"><button class="button secondary" id="backGame">← Вернуться к первой игре</button></div>
   </div>
-  <!-- НАПРАВЛЕНИЯ -->
-  <div class="section-title">
-    🎯 Выбери направление
-  </div>
-  <div
-    class="direction"
-    id="spirit"
-    onclick="selectDirection('spirit')">
-    <div class="direction-top">
-      <div class="direction-name">
-        ✝️ ДУХ
-      </div>
-      <div>
-        <span id="spiritLevel">1</span>/4
-      </div>
-    </div>
-    <div
-      class="direction-xp"
-      id="spiritXP">
-      0 XP
-    </div>
-    <div
-      class="task"
-      id="spiritTask">
-    </div>
-  </div>
-  <div
-    class="direction"
-    id="soul"
-    onclick="selectDirection('soul')">
-    <div class="direction-top">
-      <div class="direction-name">
-        ❤️ ДУША
-      </div>
-      <div>
-        <span id="soulLevel">1</span>/4
-      </div>
-    </div>
-    <div
-      class="direction-xp"
-      id="soulXP">
-      0 XP
-    </div>
-    <div
-      class="task"
-      id="soulTask">
-    </div>
-  </div>
-  <div
-    class="direction"
-    id="strength"
-    onclick="selectDirection('strength')">
-    <div class="direction-top">
-      <div class="direction-name">
-        💪 СИЛА
-      </div>
-      <div>
-        <span id="strengthLevel">1</span>/4
-      </div>
-    </div>
-    <div
-      class="direction-xp"
-      id="strengthXP">
-      0 XP
-    </div>
-    <div
-      class="task"
-      id="strengthTask">
-    </div>
-  </div>
-  <div
-    class="direction"
-    id="mind"
-    onclick="selectDirection('mind')">
-    <div class="direction-top">
-      <div class="direction-name">
-        🧠 УМ
-      </div>
-      <div>
-        <span id="mindLevel">1</span>/4
-      </div>
-    </div>
-    <div
-      class="direction-xp"
-      id="mindXP">
-      0 XP
-    </div>
-    <div
-      class="task"
-      id="mindTask">
-    </div>
-  </div>
-  <!-- LEVEL UP -->
-  <div
-    class="completed-box"
-    id="completedBox">
-    <div class="levelup-icon">
-      🎉
-    </div>
-    <div class="levelup-title">
-      LEVEL UP!
-    </div>
-    <div class="levelup-subtitle">
-      Ты выполнил недельное задание
-    </div>
-    <div class="reward">
-      <div
-        class="reward-xp"
-        id="rewardXP">
-        +100 XP
-      </div>
-      <div
-        class="reward-direction"
-        id="rewardDirection">
-        ✝️ ДУХ → Уровень 2
-      </div>
-    </div>
-    <div class="next-week">
-      Отличная работа! 💪<br>
-      Новое основное задание появится
-      на следующей неделе.
-    </div>
-  </div>
-  <button
-    class="reset"
-    onclick="resetProgress()">
-    Сбросить прогресс
-  </button>
-  <div class="info">
-    Одно основное задание в неделю
-  </div>
-</div>
+</section>
+<div class="footer">чайвстречай · игра для вашей компании</div>
+</main>
+
 <script>
-/* =========================
-   ЗАДАНИЯ
-========================= */
-const tasks = {
-  spirit: [
-    {
-      xp: 100,
-      text: "Прочитать Евангелие от Иоанна, 1 главу"
-    },
-    {
-      xp: 150,
-      text: "Запомнить Псалом 1"
-    },
-    {
-      xp: 200,
-      text: "Сходить на собрание"
-    },
-    {
-      xp: 250,
-      text: "Рассказать Евангелие близкому человеку"
-    }
-  ],
-  soul: [
-    {
-      xp: 100,
-      text: "Погулять 30 минут одному без телефона"
-    },
-    {
-      xp: 150,
-      text: "Помочь родителям по дому 3 раза"
-    },
-    {
-      xp: 200,
-      text: "Сделать сюрприз маме или папе"
-    },
-    {
-      xp: 250,
-      text: "Сделать 3 добрых поступка, о которых никто не просил и за которые ничего не ожидаешь получить"
-    }
-  ],
-  strength: [
-    {
-      xp: 100,
-      text: "Пробежать 1 км или присесть 100 раз"
-    },
-    {
-      xp: 150,
-      text: "Пробежать 3 км или присесть 500 раз"
-    },
-    {
-      xp: 200,
-      text: "Пробежать 5 км или сделать 2 тренировки в зале"
-    },
-    {
-      xp: 250,
-      text: "Пробежать 3 км и сделать 2 тренировки в зале"
-    }
-  ],
-  mind: [
-    {
-      xp: 100,
-      text: "Выучить 10 слов на одном иностранном языке (не эстонском и не английском)"
-    },
-    {
-      xp: 150,
-      text: "Запомнить столицы 20 стран"
-    },
-    {
-      xp: 200,
-      text: "Выучить наизусть любой стихотворный текст не из Библии"
-    },
-    {
-      xp: 250,
-      text: "Прочитать книгу «Маленький принц»"
-    }
-  ]
-};
-/* =========================
-   НАЗВАНИЯ
-========================= */
-const directionNames = {
-  spirit: "✝️ ДУХ",
-  soul: "❤️ ДУША",
-  strength: "💪 СИЛА",
-  mind: "🧠 УМ"
-};
-/* =========================
-   СОСТОЯНИЕ
-========================= */
-let state = JSON.parse(
-  localStorage.getItem("levelUpState")
-) || {
-  totalXP: 0,
-  spirit: {
-    level: 1,
-    xp: 0
-  },
-  soul: {
-    level: 1,
-    xp: 0
-  },
-  strength: {
-    level: 1,
-    xp: 0
-  },
-  mind: {
-    level: 1,
-    xp: 0
-  },
-  selectedDirection: null,
-  completedWeek: null,
-  completedReward: null,
-  daily: {
-    date: null,
-    prayer: false,
-    bible: false
-  }
-};
-/* =========================
-   НЕДЕЛЯ
-========================= */
-function getWeekKey() {
-  const date = new Date();
-  const firstDay = new Date(
-    date.getFullYear(),
-    0,
-    1
-  );
-  const days = Math.floor(
-    (date - firstDay) / 86400000
-  );
-  const week = Math.ceil(
-    (days + firstDay.getDay() + 1) / 7
-  );
-  return date.getFullYear() + "-" + week;
+const entry=document.querySelector('#entry'),board=document.querySelector('#board'),setup=document.querySelector('#setup'),play=document.querySelector('#play'),win=document.querySelector('#win'),meetGame=document.querySelector('#meetGame'),meetgrid=document.querySelector('#meetgrid');
+
+for(let hour=1;hour<=12;hour++){
+  const slot=document.createElement('div');
+  slot.className='meet-slot';
+  slot.innerHTML=`<label>Встреча в</label><b>${hour}</b>`;
+  const input=document.createElement('input');
+  input.maxLength=32;
+  input.placeholder='Имя';
+  input.setAttribute('aria-label',`Имя для встречи в ${hour} часов`);
+  input.value=localStorage.getItem(`chaiv-hour-${hour}`)||'';
+  input.addEventListener('input',()=>localStorage.setItem(`chaiv-hour-${hour}`,input.value));
+  slot.append(input);
+  meetgrid.append(slot);
 }
-/* =========================
-   ДАТА
-========================= */
-function getTodayKey() {
-  const date = new Date();
-  return (
-    date.getFullYear() +
-    "-" +
-    (date.getMonth() + 1) +
-    "-" +
-    date.getDate()
-  );
+
+document.querySelector('#toMeet').onclick=()=>{
+  meetGame.classList.remove('hidden');
+  meetGame.scrollIntoView({behavior:'smooth'});
+};
+document.querySelector('#backGame').onclick=()=>{
+  meetGame.classList.add('hidden');
+  window.scrollTo({top:0,behavior:'smooth'});
+};
+
+for(let i=0;i<16;i++){
+  const x=document.createElement('input');
+  x.className='cell';
+  x.maxLength=32;
+  x.autocomplete='off';
+  x.setAttribute('aria-label',`Имя ${i+1}`);
+  x.placeholder=`Имя ${i+1}`;
+  x.addEventListener('keydown',e=>{
+    if(e.key==='Enter'){
+      e.preventDefault();
+      if(x.value.trim()&&i<15)entry.children[i+1].focus();
+    }
+  });
+  x.addEventListener('blur',()=>{
+    if(x.value.trim())x.disabled=true;
+  });
+  entry.append(x);
 }
-/* =========================
-   СОХРАНЕНИЕ
-========================= */
-function save() {
-  localStorage.setItem(
-    "levelUpState",
-    JSON.stringify(state)
-  );
+
+let names=[],marked=new Set();
+
+function hasLine(){
+  const lines=[];
+  for(let r=0;r<4;r++)lines.push([0,1,2,3].map(c=>r*4+c));
+  for(let c=0;c<4;c++)lines.push([0,1,2,3].map(r=>r*4+c));
+  lines.push([0,5,10,15],[3,6,9,12]);
+  return lines.some(line=>line.every(i=>marked.has(i)));
 }
-/* =========================
-   ЕЖЕДНЕВНЫЕ БОНУСЫ
-========================= */
-function checkDailyReset() {
-  const today = getTodayKey();
-  if (state.daily.date !== today) {
-    state.daily = {
-      date: today,
-      prayer: false,
-      bible: false
+
+function draw(){
+  board.replaceChildren();
+  names.forEach((n,i)=>{
+    const b=document.createElement('button');
+    b.className='cell'+(marked.has(i)?' marked':'');
+    b.textContent=n;
+    b.setAttribute('aria-pressed',String(marked.has(i)));
+    b.onclick=()=>{
+      marked.has(i)?marked.delete(i):marked.add(i);
+      draw();
     };
-    save();
-  }
+    board.append(b);
+  });
+  win.classList.toggle('show',hasLine());
 }
-function getDailyBonus(type) {
-  checkDailyReset();
-  if (state.daily[type]) {
+
+document.querySelector('#begin').onclick=()=>{
+  names=[...entry.querySelectorAll('input')].map(x=>x.value.trim());
+  if(names.some(x=>!x)){
+    alert('Заполни все 16 клеток, чтобы начать игру.');
     return;
   }
-  state.daily[type] = true;
-  state.totalXP += 10;
-  save();
-  updateUI();
-}
-/* =========================
-   ВЫБОР НАПРАВЛЕНИЯ
-========================= */
-function selectDirection(direction) {
-  const week = getWeekKey();
-  if (state.completedWeek === week) {
-    return;
-  }
-  if (
-    state.selectedDirection &&
-    state.selectedDirection !== direction
-  ) {
-    return;
-  }
-  state.selectedDirection = direction;
-  save();
-  updateUI();
-}
-/* =========================
-   ВЫПОЛНЕНИЕ ЗАДАНИЯ
-========================= */
-function completeTask() {
-  const direction =
-    state.selectedDirection;
-  if (!direction) {
-    return;
-  }
-  const week = getWeekKey();
-  if (state.completedWeek === week) {
-    return;
-  }
-  const currentLevel =
-    state[direction].level;
-  const task =
-    tasks[direction][currentLevel - 1];
-  state.totalXP += task.xp;
-  state[direction].xp += task.xp;
-  if (state[direction].level < 4) {
-    state[direction].level++;
-  }
-  state.completedWeek = week;
-  state.completedReward = {
-    xp: task.xp,
-    direction: direction,
-    newLevel:
-      state[direction].level
-  };
-  save();
-  updateUI();
-}
-/* =========================
-   ОБНОВЛЕНИЕ
-========================= */
-function updateUI() {
-  checkDailyReset();
-  /* GLOBAL */
-  const level =
-    Math.floor(state.totalXP / 500) + 1;
-  const currentXP =
-    state.totalXP % 500;
-  document.getElementById(
-    "globalLevel"
-  ).textContent =
-    "Уровень " + level;
-  document.getElementById(
-    "globalXP"
-  ).textContent =
-    state.totalXP + " XP";
-  document.getElementById(
-    "globalProgress"
-  ).style.width =
-    (currentXP / 500 * 100) + "%";
-  /* DAILY */
-  const prayerButton =
-    document.getElementById(
-      "prayerButton"
-    );
-  const bibleButton =
-    document.getElementById(
-      "bibleButton"
-    );
-  if (state.daily.prayer) {
-    prayerButton.textContent =
-      "✓ Получено";
-    prayerButton.classList.add(
-      "done"
-    );
-  } else {
-    prayerButton.textContent =
-      "+10 XP";
-    prayerButton.classList.remove(
-      "done"
-    );
-  }
-  if (state.daily.bible) {
-    bibleButton.textContent =
-      "✓ Получено";
-    bibleButton.classList.add(
-      "done"
-    );
-  } else {
-    bibleButton.textContent =
-      "+10 XP";
-    bibleButton.classList.remove(
-      "done"
-    );
-  }
-  /* DIRECTIONS */
-  const directions = [
-    "spirit",
-    "soul",
-    "strength",
-    "mind"
-  ];
-  const week =
-    getWeekKey();
-  const weekCompleted =
-    state.completedWeek === week;
-  directions.forEach(
-    direction => {
-      const data =
-        state[direction];
-      document.getElementById(
-        direction + "Level"
-      ).textContent =
-        data.level;
-      document.getElementById(
-        direction + "XP"
-      ).textContent =
-        data.xp + " XP";
-      const card =
-        document.getElementById(
-          direction
-        );
-      const taskBox =
-        document.getElementById(
-          direction + "Task"
-        );
-      card.classList.remove(
-        "selected",
-        "locked"
-      );
-      taskBox.classList.remove(
-        "show"
-      );
-      taskBox.innerHTML = "";
-      if (weekCompleted) {
-        card.classList.add(
-          "locked"
-        );
-        return;
-      }
-      if (
-        state.selectedDirection &&
-        state.selectedDirection !== direction
-      ) {
-        card.classList.add(
-          "locked"
-        );
-        return;
-      }
-      if (
-        state.selectedDirection === direction
-      ) {
-        card.classList.add(
-          "selected"
-        );
-        const task =
-          tasks[direction][
-            data.level - 1
-          ];
-        taskBox.innerHTML = `
-          <div class="task-title">
-            ТВОЁ ЗАДАНИЕ • ${task.xp} XP
-          </div>
-          <div class="task-text">
-            ${task.text}
-          </div>
-          <button
-            class="complete-button"
-            onclick="completeTask()">
-            Я выполнил
-          </button>
-        `;
-        taskBox.classList.add(
-          "show"
-        );
-      }
-    }
-  );
-  /* LEVEL UP */
-  const completedBox =
-    document.getElementById(
-      "completedBox"
-    );
-  if (
-    weekCompleted &&
-    state.completedReward
-  ) {
-    completedBox.classList.add(
-      "show"
-    );
-    document.getElementById(
-      "rewardXP"
-    ).textContent =
-      "+" +
-      state.completedReward.xp +
-      " XP";
-    document.getElementById(
-      "rewardDirection"
-    ).textContent =
-      directionNames[
-        state.completedReward.direction
-      ] +
-      " → Уровень " +
-      state.completedReward.newLevel;
-  } else {
-    completedBox.classList.remove(
-      "show"
-    );
-  }
-}
-/* =========================
-   СБРОС
-========================= */
-function resetProgress() {
-  if (
-    confirm(
-      "Сбросить весь прогресс?"
-    )
-  ) {
-    localStorage.removeItem(
-      "levelUpState"
-    );
-    location.reload();
-  }
-}
-/* =========================
-   СТАРТ
-========================= */
-updateUI();
+  marked.clear();
+  setup.classList.add('hidden');
+  play.classList.remove('hidden');
+  draw();
+};
+
+document.querySelector('#edit').onclick=()=>{
+  setup.classList.remove('hidden');
+  play.classList.add('hidden');
+  entry.querySelectorAll('input').forEach((x,i)=>{
+    x.disabled=false;
+    x.value=names[i];
+  });
+};
+
+document.querySelector('#reset').onclick=()=>{
+  marked.clear();
+  draw();
+};
 </script>
 </body>
 </html>
