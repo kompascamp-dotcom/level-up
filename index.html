@@ -4,22 +4,205 @@
 <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="theme-color" content="#111022"><title>чайвстречай — игра в имена</title>
 <style>
-:root{--ink:#f7f3ff;--muted:#b7b2ca;--bg:#111022;--panel:#1c1a31;--edge:#393653;--purple:#a78bfa;--pink:#ff70c8;--lime:#c8ff56}*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at 50% -12%,#38315c 0,transparent 48%),var(--bg);color:var(--ink);font:16px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif;min-height:100vh}.wrap{width:min(100% - 32px,640px);margin:0 auto;padding:24px 0 48px}.brand{text-align:center;margin:16px 0 24px}.logo{display:inline-flex;align-items:center;gap:10px;font-weight:900;font-size:clamp(27px,7vw,40px);letter-spacing:-1.6px;color:var(--ink);text-shadow:0 0 24px #b897ff55}.cup{display:grid;place-items:center;width:46px;height:46px;border-radius:16px;background:linear-gradient(135deg,var(--pink),var(--purple));font-size:25px;box-shadow:0 0 28px #c277f055}.tag{color:var(--muted);margin:5px 0}.verse{max-width:500px;margin:14px auto 0;padding:10px 16px;border-top:1px solid #a78bfa55;color:#e4dcff;font-size:14px;font-style:italic}.verse cite{display:block;margin-top:4px;color:#aaa2c8;font-size:12px;font-style:normal}.card{background:linear-gradient(145deg,#211f39,#19172c);border:1px solid var(--edge);border-radius:24px;padding:clamp(18px,5vw,30px);box-shadow:0 18px 55px #05040c77}h1{font-size:24px;line-height:1.2;margin:0 0 8px}p{margin:0 0 18px;color:var(--muted)}.instructions{background:#a78bfa18;border:1px solid #a78bfa4a;border-radius:14px;padding:13px 15px;margin:16px 0 20px;font-size:14px;color:#e7e0ff}.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px}.cell{width:100%;min-width:0;height:clamp(61px,16vw,86px);text-align:center;border:1.5px solid var(--edge);border-radius:14px;background:#29263f;color:var(--ink);font:600 14px system-ui;padding:5px}.cell::placeholder{color:#918ba8;font-weight:450}.cell:focus{outline:3px solid #a78bfa77;border-color:var(--purple)}.cell:disabled{opacity:1;cursor:default;color:var(--ink);-webkit-text-fill-color:var(--ink);background:#29263f}.cell.marked{background:#c8ff5622;border-color:var(--lime);color:var(--lime);text-decoration:line-through;text-decoration-thickness:2px;box-shadow:0 0 18px #c8ff5622}.actions{display:flex;gap:10px;margin-top:20px}.button{border:0;border-radius:14px;padding:14px 18px;font:750 15px system-ui;cursor:pointer;transition:transform .15s,filter .15s}.button:hover{transform:translateY(-1px);filter:brightness(1.1)}.primary{background:linear-gradient(100deg,var(--purple),var(--pink));color:#171326;flex:1}.secondary{background:#302d49;color:var(--ink);border:1px solid var(--edge)}.status{display:none;margin-top:17px;padding:13px 15px;border-radius:14px;background:#c8ff5620;border:1px solid var(--lime);color:var(--lime);font-weight:750}.status.show{display:block}.hint{text-align:center;font-size:13px;color:var(--muted);margin:15px 0 0}.footer{text-align:center;color:#858099;font-size:12px;margin-top:18px}.hidden{display:none!important}@media(max-width:380px){.grid{gap:6px}.cell{border-radius:11px;font-size:12px}.actions{flex-direction:column}}
-.meetgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin:20px 0}.meet-slot{background:#29263f;border:1px solid var(--edge);border-radius:14px;padding:9px;text-align:center}.meet-slot label{display:block;color:var(--muted);font-size:12px;margin-bottom:5px}.meet-slot b{display:block;color:var(--lime);font-size:20px}.meet-slot input{width:100%;min-width:0;border:0;border-radius:8px;background:#1b192d;color:var(--ink);text-align:center;font:600 14px system-ui;padding:9px 4px}.meet-slot input::placeholder{color:#918ba8;font-weight:400}.meet-slot input:focus{outline:2px solid var(--purple)}.meet-note{border:1px solid #a78bfa4a;background:#a78bfa18;border-radius:14px;padding:13px 15px;color:#e7e0ff;font-size:14px;margin:15px 0}.clock-mark{text-align:center;font-size:29px;margin:12px 0 -10px}@media(max-width:380px){.meetgrid{gap:6px}.meet-slot{padding:7px 4px}.meet-slot input{font-size:12px}}
-.start-screen{min-height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:24px;padding:28px;background:radial-gradient(ellipse at 50% 38%,#32294c 0,transparent 48%),var(--bg)}.start-logo{display:block;width:min(52vw,260px);height:auto;max-height:52svh;object-fit:contain;transform:rotate(8deg)}.start-button{width:min(100%,280px);border:0;border-radius:16px;padding:16px 24px;background:linear-gradient(100deg,var(--purple),var(--pink));color:#171326;font:800 17px system-ui;cursor:pointer;box-shadow:0 8px 30px #a78bfa30}.start-button:hover{filter:brightness(1.08);transform:translateY(-1px)}.logo-button{width:min(52vw,260px);padding:0;background:transparent;box-shadow:none;border-radius:22px}.tap-hint{margin:0;color:var(--ink);font-size:16px;font-weight:700;letter-spacing:.2px;text-shadow:0 0 16px #ffcf6a55}\n</style>
+:root{--ink:#f7f3ff;--muted:#b7b2ca;--bg:#111022;--edge:#393653;--purple:#a78bfa;--pink:#ff70c8;--lime:#c8ff56}
+*{box-sizing:border-box}
+body{margin:0;background:radial-gradient(ellipse at 50% -12%,#38315c 0,transparent 48%),var(--bg);color:var(--ink);font:16px/1.45 system-ui,-apple-system,"Segoe UI",sans-serif;min-height:100vh}
+.wrap{width:min(100% - 32px,640px);margin:0 auto;padding:24px 0 48px}
+.brand{text-align:center;margin:16px 0 24px}
+.logo{display:inline-flex;align-items:center;gap:10px;font-weight:900;font-size:clamp(27px,7vw,40px);letter-spacing:-1.6px;color:var(--ink);text-shadow:0 0 24px #b897ff55}
+.cup{display:grid;place-items:center;width:46px;height:46px;border-radius:16px;background:linear-gradient(135deg,var(--pink),var(--purple));font-size:25px;box-shadow:0 0 28px #c277f055}
+.tag{color:var(--muted);margin:5px 0}
+.verse{max-width:500px;margin:14px auto 0;padding:10px 16px;border-top:1px solid #a78bfa55;color:#e4dcff;font-size:14px;font-style:italic}
+.verse cite{display:block;margin-top:4px;color:#aaa2c8;font-size:12px;font-style:normal}
+.card{background:linear-gradient(145deg,#211f39,#19172c);border:1px solid var(--edge);border-radius:24px;padding:clamp(18px,5vw,30px);box-shadow:0 18px 55px #05040c77}
+h1{font-size:24px;line-height:1.2;margin:0 0 8px}
+p{margin:0 0 18px;color:var(--muted)}
+.instructions{background:#a78bfa18;border:1px solid #a78bfa4a;border-radius:14px;padding:13px 15px;margin:16px 0 20px;font-size:14px;color:#e7e0ff}
+.grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:9px}
+.cell{width:100%;min-width:0;height:clamp(61px,16vw,86px);text-align:center;border:1.5px solid var(--edge);border-radius:14px;background:#29263f;color:var(--ink);font:600 14px system-ui;padding:5px}
+.cell::placeholder{color:#918ba8;font-weight:450}
+.cell:focus{outline:3px solid #a78bfa77;border-color:var(--purple)}
+.cell.marked{background:#c8ff5622;border-color:var(--lime);color:var(--lime);text-decoration:line-through;text-decoration-thickness:2px;box-shadow:0 0 18px #c8ff5622}
+.actions{display:flex;gap:10px;margin-top:20px}
+.button{border:0;border-radius:14px;padding:14px 18px;font:750 15px system-ui;cursor:pointer;transition:transform .15s,filter .15s}
+.button:hover{transform:translateY(-1px);filter:brightness(1.1)}
+.primary{background:linear-gradient(100deg,var(--purple),var(--pink));color:#171326;flex:1}
+.secondary{background:#302d49;color:var(--ink);border:1px solid var(--edge)}
+.status{display:none;margin-top:17px;padding:13px 15px;border-radius:14px;background:#c8ff5620;border:1px solid var(--lime);color:var(--lime);font-weight:750}
+.status.show{display:block}
+.hint{text-align:center;font-size:13px;color:var(--muted);margin:15px 0 0}
+.footer{text-align:center;color:#858099;font-size:12px;margin-top:18px}
+.hidden{display:none!important}
+@media(max-width:380px){.grid{gap:6px}.cell{border-radius:11px;font-size:12px}.actions{flex-direction:column}}
+.meetgrid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:9px;margin:20px 0}
+.meet-slot{background:#29263f;border:1px solid var(--edge);border-radius:14px;padding:9px;text-align:center}
+.meet-slot label{display:block;color:var(--muted);font-size:12px;margin-bottom:5px}
+.meet-slot b{display:block;color:var(--lime);font-size:20px}
+.meet-slot input{width:100%;min-width:0;border:0;border-radius:8px;background:#1b192d;color:var(--ink);text-align:center;font:600 14px system-ui;padding:9px 4px}
+.meet-slot input::placeholder{color:#918ba8;font-weight:400}
+.meet-slot input:focus{outline:2px solid var(--purple)}
+.meet-note{border:1px solid #a78bfa4a;background:#a78bfa18;border-radius:14px;padding:13px 15px;color:#e7e0ff;font-size:14px;margin:15px 0}
+.clock-mark{text-align:center;font-size:29px;margin:12px 0 -10px}
+@media(max-width:380px){.meetgrid{gap:6px}.meet-slot{padding:7px 4px}.meet-slot input{font-size:12px}}
+.start-screen{min-height:100svh;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:24px;padding:28px;background:radial-gradient(ellipse at 50% 38%,#32294c 0,transparent 48%),var(--bg)}
+.start-logo{display:block;width:min(52vw,260px);height:auto;max-height:52svh;object-fit:contain;transform:rotate(8deg)}
+.start-button{width:min(100%,280px);border:0;border-radius:16px;padding:16px 24px;background:linear-gradient(100deg,var(--purple),var(--pink));color:#171326;font:800 17px system-ui;cursor:pointer;box-shadow:0 8px 30px #a78bfa30}
+.start-button:hover{filter:brightness(1.08);transform:translateY(-1px)}
+.logo-button{width:min(52vw,260px);padding:0;background:transparent;box-shadow:none;border-radius:22px}
+.tap-hint{margin:0;color:var(--ink);font-size:16px;font-weight:700;letter-spacing:.2px;text-shadow:0 0 16px #ffcf6a55}
+</style>
 </head>
-<body><section id="startScreen" class="start-screen"><button id="startButton" class="start-button logo-button" aria-label="Нажми на чашку, чтобы начать игру"><img class="start-logo" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+CjxzdmcKICAgeG1sbnM6ZGM9Imh0dHA6Ly9wdXJsLm9yZy9kYy9lbGVtZW50cy8xLjEvIgogICB4bWxuczpjYz0iaHR0cDovL2NyZWF0aXZlY29tbW9ucy5vcmcvbnMjIgogICB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiCiAgIHhtbG5zOnN2Zz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciCiAgIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIKICAgdmlld0JveD0iMCAwIDU5My44ODM5NyA3NDUuNzM0NjgiCiAgIGhlaWdodD0iNzQ1LjczNDY4IgogICB3aWR0aD0iNTkzLjg4Mzk3IgogICB4bWw6c3BhY2U9InByZXNlcnZlIgogICBpZD0ic3ZnMiIKICAgdmVyc2lvbj0iMS4xIj48bWV0YWRhdGEKICAgICBpZD0ibWV0YWRhdGE4Ij48cmRmOlJERj48Y2M6V29yawogICAgICAgICByZGY6YWJvdXQ9IiI+PGRjOmZvcm1hdD5pbWFnZS9zdmcreG1sPC9kYzpmb3JtYXQ+PGRjOnR5cGUKICAgICAgICAgICByZGY6cmVzb3VyY2U9Imh0dHA6Ly9wdXJsLm9yZy9kYy9kY21pdHlwZS9TdGlsbEltYWdlIiAvPjwvY2M6V29yaz48L3JkZjpSREY+PC9tZXRhZGF0YT48ZGVmcwogICAgIGlkPSJkZWZzNiI+PGxpbmVhckdyYWRpZW50IGlkPSJ0ZWFHcmFkaWVudCIgeDE9IjAlIiB5MT0iMCUiIHgyPSI4NSUiIHkyPSIxMDAlIj48c3RvcCBvZmZzZXQ9IjAlIiBzdG9wLWNvbG9yPSIjZmZlMDhhIi8+PHN0b3Agb2Zmc2V0PSI1MiUiIHN0b3AtY29sb3I9IiNmNGEyNTkiLz48c3RvcCBvZmZzZXQ9IjEwMCUiIHN0b3AtY29sb3I9IiNkOTY4NTgiLz48L2xpbmVhckdyYWRpZW50PjxjbGlwUGF0aAogICAgICAgaWQ9ImNsaXBQYXRoMTgiCiAgICAgICBjbGlwUGF0aFVuaXRzPSJ1c2VyU3BhY2VPblVzZSI+PHBhdGgKICAgICAgICAgaWQ9InBhdGgxNiIKICAgICAgICAgZD0iTSAwLDU1OS4zMDEgSCA0NDUuNDEzIFYgMCBIIDAgWiIgLz48L2NsaXBQYXRoPjwvZGVmcz48ZwogICAgIHRyYW5zZm9ybT0ibWF0cml4KDEuMzMzMzMzMywwLDAsLTEuMzMzMzMzMywwLDc0NS43MzQ2NykiCiAgICAgaWQ9ImcxMCI+PGcKICAgICAgIGlkPSJnMTIiPjxnCiAgICAgICAgIGNsaXAtcGF0aD0idXJsKCNjbGlwUGF0aDE4KSIKICAgICAgICAgaWQ9ImcxNCI+PGcKICAgICAgICAgICB0cmFuc2Zvcm09InRyYW5zbGF0ZSg0MDEuNTM3NSwxMTQuNjgzKSIKICAgICAgICAgICBpZD0iZzIwIj48cGF0aAogICAgICAgICAgICAgaWQ9InBhdGgyMiIKICAgICAgICAgICAgIHN0eWxlPSJmaWxsOnVybCgjdGVhR3JhZGllbnQpO2ZpbGwtb3BhY2l0eToxO2ZpbGwtcnVsZTpub256ZXJvO3N0cm9rZTpub25lIgogICAgICAgICAgICAgZD0ibSAwLDAgYyAtMjIuNTgxLC0xNy4xMyAtNTYuMjU0LC0zNy4yMTQgLTk1LjYzNywtNTUuOTIgLTM5LjM4NCwtMTguNzA2IC03Ni4yMjcsLTMyLjExNiAtMTAzLjc3MiwtMzguNzk1IC0xMi45NTgsLTMuMTQyIC0yMy4xNjUsLTQuNjIxIC0zMC4zMTUsLTQuNzIyIDQuNTk2LDUuNDc4IDEyLjE5MSwxMi40NTUgMjIuODE1LDIwLjUxMyAxNi4yNTksMTIuMzM0IDM4LjI3LDI2LjIgNjQuMDIxLDM5Ljk4IGwgMTAuNDMsNC45NTQgLTAuMTk3LDAuNDE1IGMgNi45MDcsMy41NTMgMTQuMDQ1LDcuMDg2IDIxLjM4MywxMC41NzEgQyAtNzEuODg5LC00LjI5OCAtMzUuMDQ1LDkuMTExIC03LjUsMTUuNzkxIDUuNDU4LDE4LjkzMyAxNS42NjUsMjAuNDEyIDIyLjgxNSwyMC41MTMgMTguMjE5LDE1LjAzNSAxMC42MjMsOC4wNTggMCwwIG0gLTExNy44MTEsLTkuMjM3IGMgLTcuMzIxLC0zLjQ3OCAtMTQuNDU5LC03LjAwOSAtMjEuMzg1LC0xMC41NjYgbCAtNjYuMDk4LDEzOS4xNTkgLTM5LjQ0OSwtMTguNzM4IDI5Ljc1OSwtNjIuNjUzIC03LjU4NywtMy42MDMgYyAtMzAuMTI5LC0xNC4zMTEgLTQwLjUwOCwyLjUwNyAtNTIuODksMjguNTc2IGwgLTguOTQ4LDE4LjgzOSAtMzkuODgzLC0xOC45NDMgOC45NDgsLTE4Ljg0IEMgLTI4OS43NDcsLTkuODk2IC0yNTcuNzcsLTI4IC0yMDUuMDk5LC0yLjk4MiBsIDcuODAzLDMuNzA2IDE5LjgyMiwtNDEuNzMxIGMgLTQ3LjMxMSwtMjguMzU3IC03Ni43MjksLTU1LjE2NiAtNzAuOTU4LC02Ny4zMTYgNy45MjksLTE2LjY5MiA3OS4yNjUsMC42MDYgMTU5LjMzMywzOC42MzYgODAuMDY5LDM4LjAzMSAxMzguNTUsODIuMzkzIDEzMC42MjEsOTkuMDg2IC03LjkyOCwxNi42OTIgLTc5LjI2NCwtMC42MDYgLTE1OS4zMzMsLTM4LjYzNiIgLz48L2c+PGcKICAgICAgICAgICB0cmFuc2Zvcm09InRyYW5zbGF0ZSg0OS42ODEsMzQxLjAxMjUpIgogICAgICAgICAgIGlkPSJnMjQiPjxwYXRoCiAgICAgICAgICAgICBpZD0icGF0aDI2IgogICAgICAgICAgICAgc3R5bGU9ImZpbGw6dXJsKCN0ZWFHcmFkaWVudCk7ZmlsbC1vcGFjaXR5OjE7ZmlsbC1ydWxlOm5vbnplcm87c3Ryb2tlOm5vbmUiCiAgICAgICAgICAgICBkPSJtIDAsMCBjIC0xMi42NzgsLTMuMDc0IC0yMi43MTQsLTQuNTU0IC0yOS44MjIsLTQuNzEgNC42MTIsNS40MTEgMTIuMSwxMi4yNTUgMjIuNDk0LDIwLjEzOSAyMi41NzEsMTcuMTIyIDU2LjIzNiwzNy4yMDMgOTUuNjE0LDU1LjkwNiAzOS4zNzcsMTguNzA0IDc2LjIxMiwzMi4xMDkgMTAzLjc0NSwzOC43ODUgMTIuNjc4LDMuMDc1IDIyLjcxNCw0LjU1NCAyOS44MjMsNC43MSBDIDIxNy4yNDEsMTA5LjQxOSAyMDkuNzUzLDEwMi41NzYgMTk5LjM2LDk0LjY5MSAxNzYuNzg4LDc3LjU2OSAxNDMuMTI0LDU3LjQ4OSAxMDMuNzQ2LDM4Ljc4NSA2NC4zNjgsMjAuMDgyIDI3LjUzMyw2LjY3NyAwLDAgTSAyNDAuOTkzLDEyMy45MjEgQyAyMzMuMDY0LDE0MC42MTQgMTYxLjcyOCwxMjMuMzE2IDgxLjY2LDg1LjI4NSAxLjU5MSw0Ny4yNTQgLTU2Ljg5LDIuODkyIC00OC45NjEsLTEzLjgwMSBjIDcuOTI4LC0xNi42OTIgNzkuMjY0LDAuNjA2IDE1OS4zMzMsMzguNjM3IDgwLjA2OCwzOC4wMyAxMzguNTQ5LDgyLjM5MiAxMzAuNjIxLDk5LjA4NSIgLz48L2c+PGcKICAgICAgICAgICB0cmFuc2Zvcm09InRyYW5zbGF0ZSgzMzYuNzc3MSwzNzcuNTI5OCkiCiAgICAgICAgICAgaWQ9ImcyOCI+PHBhdGgKICAgICAgICAgICAgIGlkPSJwYXRoMzAiCiAgICAgICAgICAgICBzdHlsZT0iZmlsbDp1cmwoI3RlYUdyYWRpZW50KTtmaWxsLW9wYWNpdHk6MTtmaWxsLXJ1bGU6bm9uemVybztzdHJva2U6bm9uZSIKICAgICAgICAgICAgIGQ9Im0gMCwwIDAuMDc4LDAuMDc1IGMgMC4wNzcsMC4wNzQgMC4yMDUsMC4xOTYgMC4zODIsMC4zNjIgMC4zNTMsMC4zMzEgMC44OTgsMC44MzUgMS42MTIsMS40NzYgMS40MywxLjI4MyAzLjUyNCwzLjA5OSA2LjEwMyw1LjE1OSA1LjIzNCw0LjE4MSAxMi4xMzUsOS4wOTkgMTkuMzUsMTIuNzA2IDcuNDg2LDMuNzQyIDEzLjc2MSw1LjI4NSAxOC4yODIsNC43NjYgMy4zMDUsLTAuMzc5IDcuMDk0LC0xLjkzMSAxMC41MzcsLTkuMTc4IDEwLjQ5MSwtMjIuMDg4IDIzLjM2NywtNDkuNTAyIDI2LjA5MywtNzQuOTQ2IDEuMzM0LC0xMi40NTYgMC4xMDYsLTIzLjUyNCAtNC4zNzcsLTMyLjg3NSAtNC4zODUsLTkuMTQ3IC0xMi40NDMsLTE3LjgzMiAtMjYuOTg0LC0yNC43MzggbCAxMS4wNDMsLTIzLjI1IGMgMTkuMDkzLDkuMDY5IDMxLjg0MiwyMS42NyAzOS4xMDQsMzYuODE5IDcuMTY1LDE0Ljk0NSA4LjQyNSwzMS4xODMgNi43NTgsNDYuNzQ0IEMgMTA0Ljc0NSwtMjYuNjczIDg5Ljk5Miw0LjM4MSA3OS45MTksMjUuNTg2IDc5Ljc5MiwyNS44NTQgNzkuNjY1LDI2LjEyIDc5LjU0LDI2LjM4NCA3Mi42OTcsNDAuNzkxIDYxLjcyOSw0OC42MDkgNDguNjg2LDUwLjEwNSAzNi44NTcsNTEuNDYyIDI1LjE5LDQ3LjM4NiAxNi4wMTksNDIuODAyIDYuNTc4LDM4LjA4MyAtMS44OTMsMzEuOTY4IC03Ljg2NiwyNy4xOTcgYyAtMy4wMjQsLTIuNDE1IC01LjQ5MywtNC41NTUgLTcuMjIzLC02LjEwOCAtMC44NjcsLTAuNzc3IC0xLjU1MywtMS40MTIgLTIuMDM1LC0xLjg2NCAtMC4yNDEsLTAuMjI2IC0wLjQzMiwtMC40MDcgLTAuNTY5LC0wLjUzOCBsIC0wLjE2NSwtMC4xNTkgLTAuMDUyLC0wLjA1MSAtMC4wMjUsLTAuMDI0IEMgLTE3LjkzOCwxOC40NSAtMTcuOTQxLDE4LjQ0NyAtOC45Nyw5LjIyNCAwLjAwMSwwLjAwMSAwLjAwMiwwLjAwMiAwLDAiIC8+PC9nPjxnCiAgICAgICAgICAgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoNzEuMTQ1NSw0ODguNjE1KSIKICAgICAgICAgICBpZD0iZzMyIj48cGF0aAogICAgICAgICAgICAgaWQ9InBhdGgzNCIKICAgICAgICAgICAgIHN0eWxlPSJmaWxsOnVybCgjdGVhR3JhZGllbnQpO2ZpbGwtb3BhY2l0eToxO2ZpbGwtcnVsZTpub256ZXJvO3N0cm9rZTpub25lIgogICAgICAgICAgICAgZD0ibSAwLDAgYyAyMS40ODgsLTExLjM1OCAyNi4xMDQsLTIzLjQ1MiAyNi43NzgsLTMxLjI0MiAwLjM2NywtNC4yMzcgLTAuMzY2LC03Ljk0NSAtMS4yMTMsLTEwLjYxNSAtMC40MiwtMS4zMjQgLTAuODU1LC0yLjM0OSAtMS4xNTksLTMgLTAuMTUyLC0wLjMyMyAtMC4yNjksLTAuNTQ5IC0wLjMzMiwtMC42NjggLTAuMDMyLC0wLjA1OSAtMC4wNDksLTAuMDkgLTAuMDUxLC0wLjA5MyAtMC4wMDEsLTAuMDAyIDAuMDAyLDAuMDA0IDAuMDEsMC4wMTcgbCAwLjAxNCwwLjAyNSAwLjAxNiwwLjAyNiBjIDAuMDAzLDAuMDA1IDAuMDA2LDAuMDEgNy43MzEsLTQuNjEyIDcuNzI1LC00LjYyMiA3LjczNSwtNC42MDUgNy43MzgsLTQuNiBsIDAuMDE1LDAuMDI2IDAuMDM2LDAuMDYxIGMgMC4wMjYsMC4wNDUgMC4wNTcsMC4wOTkgMC4wOTIsMC4xNiAwLjA3LDAuMTI0IDAuMTU3LDAuMjgxIDAuMjU4LDAuNDcxIDAuMjAzLDAuMzc5IDAuNDYzLDAuODg5IDAuNzU4LDEuNTE5IDAuNTg5LDEuMjU4IDEuMzI1LDMuMDE1IDIuMDE0LDUuMTg2IDEuMzcxLDQuMzIgMi42MDksMTAuNDUzIDEuOTg5LDE3LjYyIEMgNDMuMzk1LC0xNC43IDM0LjIwNywyLjI2OCA4LjM3MiwxNS45MjQgYyAtMjEuNDg4LDExLjM1OCAtMjYuMTA0LDIzLjQ1MiAtMjYuNzc4LDMxLjI0MiAtMC4zNjYsNC4yMzcgMC4zNjYsNy45NDUgMS4yMTMsMTAuNjE1IDAuNDIsMS4zMjQgMC44NTUsMi4zNDkgMS4xNiwzIDAuMTUxLDAuMzIzIDAuMjY4LDAuNTQ5IDAuMzMxLDAuNjY4IDAuMDMyLDAuMDU5IDAuMDQ5LDAuMDkgMC4wNTEsMC4wOTMgLTEwZS00LC0wLjAwMiAtMC4wMDQsLTAuMDA3IC0wLjAwOSwtMC4wMTcgbCAtMC4wMTUsLTAuMDI1IC0wLjAxNiwtMC4wMjYgYyAtMC4wMDIsLTAuMDA1IC0wLjAwNiwtMC4wMSAtNy43MzEsNC42MTIgLTcuNzI1LDQuNjIyIC03LjczNSw0LjYwNSAtNy43MzgsNC42IGwgLTAuMDE1LC0wLjAyNiAtMC4wMzYsLTAuMDYxIGMgLTAuMDI2LC0wLjA0NSAtMC4wNTcsLTAuMDk5IC0wLjA5MiwtMC4xNiAtMC4wNywtMC4xMjQgLTAuMTU3LC0wLjI4MiAtMC4yNTgsLTAuNDcxIC0wLjIwMywtMC4zNzkgLTAuNDYzLC0wLjg4OSAtMC43NTgsLTEuNTE5IC0wLjU4OSwtMS4yNTggLTEuMzI1LC0zLjAxNSAtMi4wMTQsLTUuMTg2IC0xLjM3LC00LjMyIC0yLjYwOSwtMTAuNDUzIC0xLjk4OSwtMTcuNjIgQyAtMzUuMDIzLDMwLjYyNCAtMjUuODM1LDEzLjY1NiAwLDAiIC8+PC9nPjxnCiAgICAgICAgICAgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMTAwLjEyNzQsNTA2LjU2ODUpIgogICAgICAgICAgIGlkPSJnMzYiPjxwYXRoCiAgICAgICAgICAgICBpZD0icGF0aDM4IgogICAgICAgICAgICAgc3R5bGU9ImZpbGw6dXJsKCN0ZWFHcmFkaWVudCk7ZmlsbC1vcGFjaXR5OjE7ZmlsbC1ydWxlOm5vbnplcm87c3Ryb2tlOm5vbmUiCiAgICAgICAgICAgICBkPSJtIDAsMCBjIDExLjY5MiwtNS45MzggMTMuMjU2LC0xMS44MTkgMTMuNDcsLTE0LjY2MiAwLjEzNSwtMS44IC0wLjIwNCwtMy40MjkgLTAuNjEzLC00LjY0NiAtMC4yLC0wLjU5NSAtMC40MDEsLTEuMDQzIC0wLjUyNiwtMS4zMDEgLTAuMDYzLC0wLjEyNyAtMC4xMDYsLTAuMjA2IC0wLjExNSwtMC4yMjMgMCwwIDAuMDA0LDAuMDA4IDAuMDEzLDAuMDIzIGwgMC4wMjcsMC4wNDUgMC4wMTksMC4wMzIgMC4wMTcsMC4wMjggYyAwLjAwMywwLjAwNSAwLjAwNiwwLjAxIDcuNjU5LC00LjczMiA3LjY1MywtNC43NDIgNy42NjMsLTQuNzI1IDcuNjY2LC00LjcyIGwgMC4wMTQsMC4wMjMgMC4wMzIsMC4wNTMgYyAwLjAyMywwLjAzOCAwLjA0OCwwLjA4MSAwLjA3NiwwLjEyOSAwLjA1NywwLjA5NiAwLjEyNCwwLjIxMiAwLjIsMC4zNDkgMC4xNTEsMC4yNzMgMC4zMzksMC42MjcgMC41NDksMS4wNTYgMC40MTcsMC44NTUgMC45MzEsMi4wMjggMS40MTQsMy40NjcgMC45NTgsMi44NDkgMS44NjEsNi45MzggMS41LDExLjczOCAtMC43NzksMTAuMzU3IC03LjE2MiwyMS4yMDkgLTIzLjI5MSwyOS40IC0xMS42OTIsNS45MzggLTEzLjI1NSwxMS44MTkgLTEzLjQ2OSwxNC42NjIgLTAuMTM2LDEuODAxIDAuMjA0LDMuNDI5IDAuNjEzLDQuNjQ3IDAuMTk5LDAuNTk1IDAuNCwxLjA0MiAwLjUyNiwxLjMgMC4wNjIsMC4xMjcgMC4xMDUsMC4yMDYgMC4xMTUsMC4yMjMgMCwwIC0wLjAwNSwtMC4wMDggLTAuMDE0LC0wLjAyMyBsIC0wLjAyNywtMC4wNDUgLTAuMDE5LC0wLjAzMiAtMC4wMTcsLTAuMDI4IGMgLTAuMDAzLC0wLjAwNSAtMC4wMDYsLTAuMDEgLTcuNjU5LDQuNzMyIC03LjY1Miw0Ljc0MiAtNy42NjIsNC43MjYgLTcuNjY1LDQuNzIgbCAtMC4wMTUsLTAuMDIzIC0wLjAzMiwtMC4wNTMgYyAtMC4wMjIsLTAuMDM3IC0wLjA0OCwtMC4wOCAtMC4wNzYsLTAuMTI4IC0wLjA1NiwtMC4wOTYgLTAuMTIzLC0wLjIxMyAtMC4xOTksLTAuMzUgLTAuMTUyLC0wLjI3MyAtMC4zNCwtMC42MjcgLTAuNTQ5LC0xLjA1NiAtMC40MTgsLTAuODU1IC0wLjkzMiwtMi4wMjggLTEuNDE1LC0zLjQ2NyAtMC45NTcsLTIuODQ5IC0xLjg2MSwtNi45MzggLTEuNSwtMTEuNzM3IEMgLTIyLjUxMiwxOS4wNDMgLTE2LjEyOCw4LjE5MSAwLDAiIC8+PC9nPjwvZz48L2c+PC9nPjxnIGZpbGw9IiNmZmUwOGEiIG9wYWNpdHk9IjAuOTYiPjxwYXRoIGQ9Ik01MTIgNTQgNTE4IDY4IDUzMiA3NCA1MTggODAgNTEyIDk0IDUwNiA4MCA0OTIgNzQgNTA2IDY4WiIvPjxwYXRoIGQ9Ik01NTAgMTEyIDU1NCAxMjIgNTY0IDEyNiA1NTQgMTMwIDU1MCAxNDAgNTQ2IDEzMCA1MzYgMTI2IDU0NiAxMjJaIi8+PGNpcmNsZSBjeD0iNDc4IiBjeT0iMTE2IiByPSIzIi8+PC9nPjwvc3ZnPg==" alt="Логотип чайвстречай"></button><p class="tap-hint">Нажми на чашку</p></section><main id="gameContent" class="wrap hidden"><header class="brand"><div class="logo"><span class="cup">☕</span>чайвстречай</div><div class="tag">Играем, знакомимся, отмечаем совпадения</div><div class="verse">«Кто хочет иметь друзей, тот и сам должен быть дружелюбным.»<cite>Притчи 18:24</cite></div></header>
-<section class="card"><div id="setup"><h1>Заполни своё поле</h1><p>Впиши в клетки 16 имён — по одному в каждую.</p><div class="instructions">Слушай ведущего. Услышал имя из своего поля — нажми на эту клетку. Собери 4 отмеченных имени подряд по горизонтали, вертикали или диагонали и объяви: «Чайвстречай!»</div><div class="grid" id="entry"></div><div class="actions"><button class="button primary" id="begin">Готово, начать игру</button></div></div>
-<div id="play" class="hidden"><h1>Твоё поле</h1><p>Нажимай на имя, когда ведущий его назовёт.</p><div class="grid" id="board"></div><div id="win" class="status" role="status">🎉 Чайвстречай! У тебя есть выигрышная линия из четырёх имён.</div><div class="actions"><button class="button secondary" id="edit">Изменить имена</button><button class="button secondary" id="reset">Сбросить отметки</button></div><div class="hint">Нашёл линию? Сразу сообщи ведущему.</div><div class="actions"><button class="button primary" id="toMeet">Перейти к игре знакомств →</button></div></div><div id="meetGame" class="card hidden" style="margin-top:16px"><h1>Часы знакомств</h1><p>Встретьтесь и договоритесь, с кем хотите пообщаться в каждый час.</p><div class="meet-note">Познакомься с ребятами и запиши имя рядом с часом только после того, как вы договорились встретиться. Например, когда ведущий объявит «встреча на 2 часа», найди человека, чьё имя у тебя записано напротив 2, и обсудите вопрос ведущего.</div><div class="clock-mark">🕛</div><div class="meetgrid" id="meetgrid"></div><div class="actions"><button class="button secondary" id="backGame">← Вернуться к первой игре</button></div></div></section><div class="footer">чайвстречай · игра для вашей компании</div></main>
+<body>
+<section id="startScreen" class="start-screen">
+  <button id="startButton" class="start-button logo-button" aria-label="Нажми на чашку, чтобы начать игру">
+    <img class="start-logo" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+CjxzdmcKICAgeG1sbnM6ZGM9Imh0dHA6Ly9wdXJsLm9yZy9kYy9lbGVtZW50cy8xLjEvIgogICB4bWxuczpjYz0iaHR0cDovL2NyZWF0aXZlY29tbW9ucy5vcmcvbnMjIgogICB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiCiAgIHhtbG5zOnN2Zz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciCiAgIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy9zdmciCiAgIHZpZXdCb3g9IjAgMCA1OTMuODgzOTcgNzQ1LjczNDY4IgogICBoZWlnaHQ9Ijc0NS43MzQ2OCIKICAgd2lkdGg9IjU5My44ODM5NyIKICAgeG1sOnNwYWNlPSJwcmVzZXJ2ZSIKICAgaWQ9InN2ZzIiCiAgIHZlcnNpb249IjEuMSI+PG1ldGFkYXRhCiAgICAgaWQ9Im1ldGFkYXRhOCI+PHJkZjpSREY+PGNjOldvcmsKICAgICAgICAgcmRmOmFib3V0PSIiPjxkYzpmb3JtYXQ+aW1hZ2Uvc3ZnK3htbDwvZGM6Zm9ybWF0PjxkYzp0eXBlCiAgICAgICAgICAgcmRmOnJlc291cmNlPSJodHRwOi8vcHVybC5vcmcvZGcvZGNtaXR5cGUvU3RpbGxJbWFnZSIgLz48L2NjOldvcms+PC9yZGY6UkRGPjwv bWV0YWRhdGE+PGRlZnMKICAgICBpZD0iZGVmczYiPjxsaW5lYXJHcmFkaWVudCBpZD0idGVhR3JhZGllbnQiIHgxPSIwJSIgeTE9IjAlIiB4Mj0iODUlIiB5Mj0iMTAwJSI+PHN0b3Agb2Zmc2V0PSIwJSIgc3RvcC1jb2xvcj0iI2ZmZTA4YSIvPjxzdG9wIG9mZnNldD0iNTIlIiBzdG9wLWNvbG9yPSIjZjRhMjU5Ii8+PHN0b3Agb2Zmc2V0PSIxMDAlIiBzdG9wLWNvbG9yPSIjZDk2ODU4Ii8+PC9saW5lYXJHcmFkaWVudD48Y2xpcFBhdGgKICAgICAgIGlkPSJjbGlwUGF0aDE4IgogICAgICAgY2xpcFBhdGhVbml0cz0idXNlclNwYWNlT25Vc2UiPjxwYXRoCiAgICAgICAgIGlkPSJwYXRoMTYiCiAgICAgICAgIGQ9Ik0gMCw1NTkuMzAxIEggNDQ1LjQxMyBWIDAgSCAwIFoiIC8+PC9jbGlwUGF0aD48L2RlZnM+PGcKICAgICB0cmFuc2Zvcm09Im1hdHJpeCgxLjMzMzMzMzMsMCwwLC0xLjMzMzMzMzMsMCw3NDUuNzM0NjcpIgogICAgIGlkPSJnMTAiPjxnCiAgICAgICBpZD0iZzEyIj48ZwogICAgICAgICBjbGlwLXBhdGg9InVybCgjY2xpcFBhdGgxOCkiCiAgICAgICAgIGlkPSJnMTQiPjxnCiAgICAgICAgICAgIHRyYW5zZm9ybT0idHJhbnNsYXRlKDQwMS41Mzc1LDExNC42ODMpIgogICAgICAgICAgIGlkPSJnMjAiPjxwYXRoCiAgICAgICAgICAgICAgaWQ9InBhdGgyMiIKICAgICAgICAgICAgIHN0eWxlPSJmaWxsOnVybCgjdGVhR3JhZGlhbnQpO2ZpbGwtb3BhY2l0eToxO2ZpbGwtcnVsZTpub256ZXJvO3N0cm9rZTpub25lIgogICAgICAgICAgICAgZD0ibSAwLDAgYyAtMjIuNTgxLC0xNy4xMyAtNTYuMjU0LC0zNy4yMTQgLTk1LjYzNywtNTUuOTIgLTM5LjM4NCwtMTguNzA2IC03Ni4yMjcsLTMyLjExNiAtMTAzLjc3MiwtMzguNzk1IC0xMi45NTgsLTMuMTQyIC0yMy4xNjUsLTQuNjIxIC0zMC4zMTUsLTQuNzIyIDQuNTk2LDUuNDc4IDEyLjE5MSwxMi40NTUgMjIuODE1LDIwLjUxMyAxNi4yNTksMTIuMzM0IDM4LjI3LDI2LjIgNjQuMDIxLDM5Ljk4IGwgMTAuNDMsNC45NTQgLTAuMTk3LDAuNDE1IGMgNi45MDcsMy41NTMgMTQuMDQ1LDcuMDg2IDIxLjM4MywxMC41NzEgQyAtNzEuODg5LC00LjI5OCAtMzUuMDQ1LDkuMTExIC03LjUsMTUuNzkxIDUuNDU4LDE4LjkzMyAxNS42NjUsMjAuNDEyIDIyLjgxNSwyMC41MTMgMTguMjE5LDE1LjAzNSAxMC42MjMsOC4wNTggMCwwIG0gLTExNy44MTEsLTkuMjM3IGMgLTcuMzIxLC0zLjQ3OCAtMTQuNDU5LC03LjAwOSAtMjEuMzg1LC0xMC41NjYgbCAtNjYuMDk4LDEzOS4xNTkgLTM5LjQ0OSwtMTguNzM4IDI5Ljc1OSwtNjIuNjUzIC03LjU4NywtMy42MDMgYyAtMzAuMTI5LC0xNC4zMTEgLTQwLjUwOCwyLjUwNyAtNTIuODksMjguNTc2IGwgLTguOTQ4LDE4LjgzOSAtMzkuODgzLC0xOC45NDMgOC45NDgsLTE4Ljg0IEMgLTI4OS43NDcsLTkuODk2IC0yNTcuNzcsLTI4IC0yMDUuMDk5LC0yLjk4MiBsIDcuODAzLDMuNzA2IDE5LjgyMiwtNDEuNzMxIGMgLTQ3LjMxMSwtMjguMzU3IC03Ni43MjksLTU1LjE2NiAtNzAuOTU4LC02Ny4zMTYgNy45MjksLTE2LjY5MiA3OS4yNjUsMC42MDYgMTU5LjMzMywzOC42MzYgODAuMDY5LDM4LjAzMSAxMzguNTUsODIuMzkzIDEzMC42MjEsOTkuMDg2IC03LjkyOCwxNi42OTIgLTc5LjI2NCwwLjYwNiAtMTU5LjMzMywtMzguNjM2IiAvPjwvZz48ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSg0OS42ODEsMzQxLjAxMjUpIj48cGF0aCBpZD0icGF0aDI2IiBzdHlsZT0iZmlsbDp1cmwoI3RlYUdyYWRpZW50KTtmaWxsLW9wYWNpdHk6MTtmaWxsLXJ1bGU6bm9uemVybztzdHJva2U6bm9uZSIgZD0ibSAtMSwzIC4uLiIvPjwvZz48ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSgzMzYuNzc3MSwzNzcuNTI5OCkiPjxwYXRoIGlkPSJwYXRoMzAiIHN0eWxlPSJmaWxsOnVybCgjdGVhR3JhZGllbnQpIiBkPSJtIDAsMC4uLiIvPjwvZz48ZyB0cmFuc2Zvcm09InRyYW5zbGF0ZSg3MS4xNDU1LDQ4OC42MTUpIj48cGF0aCBpZD0icGF0aDM0IiBzdHlsZT0iZmlsbDp1cmwoI3RlYUdyYWRpZW50KTtmaWxsLW9wYWNpdHk6MTtzdHJva2U6bm9uZSIgZD0iLi4uIi8+PC9nPjxnIHRyYW5zZm9ybT0idHJhbnNsYXRlKDEwMC4xMjc0LDUwNi41Njg1KSI+PHBhdGggaWQ9InBhdGgzOCIgc3R5bGU9ImZpbGw6dXJsKCN0ZWFHcmFkaWVudCkiIGQ9Im0gMCwwLi4uIi8+PC9nPjwvZz48L2c+PC9nPjxnIGZpbGw9IiNmZmUwOGEiIG9wYWNpdHk9IjAuOTYiPjxwYXRoIGQ9Ik01MTIgNTQgNTE4IDY4IDUzMiA3NCA1MTggODAgNTEyIDk0IDUwNiA4MCA0OTIgNzQgNTA2IDY4WiIvPjxwYXRoIGQ9Ik01NTAgMTEyIDU1NCAxMjIgNTY0IDEyNiA1NTQgMTMwIDU1MCAxNDAgNTQ2IDEzMCA1MzYgMTI2IDU0NiAxMjJaIi8+PGNpcmNsZSBjeD0iNDc4IiBjeT0iMTE2IiByPSIzIi8+PC9nPjwvc3ZnPg==" alt="Логотип чайвстречай">
+  </button>
+  <p class="tap-hint">Нажми на чашку</p>
+</section>
+
+<main id="gameContent" class="wrap hidden">
+<header class="brand">
+  <div class="logo"><span class="cup">☕</span>чайвстречай</div>
+  <div class="tag">Играем, знакомимся, отмечаем совпадения</div>
+  <div class="verse">«Кто хочет иметь друзей, тот и сам должен быть дружелюбным.»<cite>Притчи 18:24</cite></div>
+</header>
+
+<section class="card">
+  <div id="setup">
+    <h1>Заполни своё поле</h1>
+    <p>Впиши в клетки 16 имён — по одному в каждую.</p>
+    <div class="instructions">Слушай ведущего. Услышал имя из своего поля — нажми на эту клетку. Собери 4 отмеченных имени подряд по горизонтали, вертикали или диагонали и объяви: «Чайвстречай!»</div>
+    <div class="grid" id="entry"></div>
+    <div class="actions"><button class="button primary" id="begin">Готово, начать игру</button></div>
+  </div>
+
+  <div id="play" class="hidden">
+    <h1>Твоё поле</h1>
+    <p>Нажимай на имя, когда ведущий его назовёт.</p>
+    <div class="grid" id="board"></div>
+    <div id="win" class="status" role="status">🎉 Чайвстречай! У тебя есть выигрышная линия из четырёх имён.</div>
+    <div class="actions">
+      <button class="button secondary" id="edit">Изменить имена</button>
+      <button class="button secondary" id="reset">Сбросить отметки</button>
+    </div>
+    <div class="hint">Нашёл линию? Сразу сообщи ведущему.</div>
+    <div class="actions"><button class="button primary" id="toMeet">Перейти к игре знакомств →</button></div>
+  </div>
+
+  <div id="meetGame" class="card hidden" style="margin-top:16px">
+    <h1>Часы знакомств</h1>
+    <p>Встретьтесь и договоритесь, с кем хотите пообщаться в каждый час.</p>
+    <div class="meet-note">Познакомься с ребятами и запиши имя рядом с часом только после того, как вы договорились встретиться. Например, когда ведущий объявит «встреча на 2 часа», найди человека, чьё имя у тебя записано напротив 2, и обсудите вопрос ведущего.</div>
+    <div class="clock-mark">🕛</div>
+    <div class="meetgrid" id="meetgrid"></div>
+    <div class="actions"><button class="button secondary" id="backGame">← Вернуться к первой игре</button></div>
+  </div>
+</section>
+
+<div class="footer">чайвстречай · игра для вашей компании</div>
+</main>
+
 <script>
 const entry=document.querySelector('#entry'),board=document.querySelector('#board'),setup=document.querySelector('#setup'),play=document.querySelector('#play'),win=document.querySelector('#win'),meetGame=document.querySelector('#meetGame'),meetgrid=document.querySelector('#meetgrid');
-for(let hour=1;hour<=12;hour++){const slot=document.createElement('div');slot.className='meet-slot';slot.innerHTML=`<label>Встреча в</label><b>${hour}</b>`;const input=document.createElement('input');input.maxLength=32;input.placeholder='Имя';input.setAttribute('aria-label',`Имя для встречи в ${hour} часов`);input.value=localStorage.getItem(`chaiv-hour-${hour}`)||'';input.addEventListener('input',()=>localStorage.setItem(`chaiv-hour-${hour}`,input.value));slot.append(input);meetgrid.append(slot)}
-document.querySelector('#startButton').onclick=()=>{document.querySelector('#startScreen').classList.add('hidden');document.querySelector('#gameContent').classList.remove('hidden');window.scrollTo({top:0})};
-document.querySelector('#toMeet').onclick=()=>{meetGame.classList.remove('hidden');meetGame.scrollIntoView({behavior:'smooth'})};document.querySelector('#backGame').onclick=()=>{meetGame.classList.add('hidden');window.scrollTo({top:0,behavior:'smooth'})};
-for(let i=0;i<16;i++){const x=document.createElement('input');x.className='cell';x.maxLength=32;x.autocomplete='off';x.setAttribute('aria-label',`Имя ${i+1}`);x.placeholder=`Имя ${i+1}`;x.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();if(x.value.trim()&&i<15)entry.children[i+1].focus()}});x.addEventListener('blur',()=>{if(x.value.trim())x.disabled=true});entry.append(x)}
-let names=[],marked=new Set();
-function hasLine(){const lines=[];for(let r=0;r<4;r++)lines.push([0,1,2,3].map(c=>r*4+c));for(let c=0;c<4;c++)lines.push([0,1,2,3].map(r=>r*4+c));lines.push([0,5,10,15],[3,6,9,12]);return lines.some(line=>line.every(i=>marked.has(i)))}
-function draw(){board.replaceChildren();names.forEach((n,i)=>{const b=document.createElement('button');b.className='cell'+(marked.has(i)?' marked':'');b.textContent=n;b.setAttribute('aria-pressed',String(marked.has(i)));b.onclick=()=>{marked.has(i)?marked.delete(i):marked.add(i);draw()};board.append(b)});win.classList.toggle('show',hasLine())}
-document.querySelector('#begin').onclick=()=>{names=[...entry.querySelectorAll('input')].map(x=>x.value.trim());if(names.some(x=>!x)){alert('Заполни все 16 клеток, чтобы начать игру.');return}marked.clear();setup.classList.add('hidden');play.classList.remove('hidden');draw()};
-document.querySelector('#edit').onclick=()=>{setup.classList.remove('hidden');play.classList.add('hidden');entry.querySelectorAll('input').forEach((x,i)=>{x.disabled=false;x.value=names[i]})};document.querySelector('#reset').onclick=()=>{marked.clear();draw()};
-</script></body></html>
+
+for(let hour=1;hour<=12;hour++){
+  const slot=document.createElement('div');
+  slot.className='meet-slot';
+  slot.innerHTML=`<label>Встреча в</label><b>${hour}</b>`;
+  const input=document.createElement('input');
+  input.maxLength=32;
+  input.placeholder='Имя';
+  input.setAttribute('aria-label',`Имя для встречи в ${hour} часов`);
+  input.value=localStorage.getItem(`chaiv-hour-${hour}`)||'';
+  input.addEventListener('input',()=>localStorage.setItem(`chaiv-hour-${hour}`,input.value));
+  slot.append(input);
+  meetgrid.append(slot);
+}
+
+document.querySelector('#startButton').onclick=()=>{
+  document.querySelector('#startScreen').classList.add('hidden');
+  document.querySelector('#gameContent').classList.remove('hidden');
+  window.scrollTo({top:0});
+};
+
+document.querySelector('#toMeet').onclick=()=>{
+  meetGame.classList.remove('hidden');
+  meetGame.scrollIntoView({behavior:'smooth'});
+};
+
+document.querySelector('#backGame').onclick=()=>{
+  meetGame.classList.add('hidden');
+  window.scrollTo({top:0,behavior:'smooth'});
+};
+
+for(let i=0;i<16;i++){
+  const x=document.createElement('input');
+  x.className='cell';
+  x.maxLength=32;
+  x.autocomplete='off';
+  x.setAttribute('aria-label',`Имя ${i+1}`);
+  x.placeholder=`Имя ${i+1}`;
+  x.addEventListener('keydown',e=>{
+    if(e.key==='Enter'){
+      e.preventDefault();
+      if(x.value.trim()&&i<15)entry.children[i+1].focus();
+    }
+  });
+  entry.append(x);
+}
+
+let names=[];
+let marked=new Set();
+
+function hasLine(){
+  const lines=[];
+  for(let r=0;r<4;r++)lines.push([0,1,2,3].map(c=>r*4+c));
+  for(let c=0;c<4;c++)lines.push([0,1,2,3].map(r=>r*4+c));
+  lines.push([0,5,10,15],[3,6,9,12]);
+  return lines.some(line=>line.every(i=>marked.has(i)));
+}
+
+function draw(){
+  board.replaceChildren();
+  names.forEach((name,i)=>{
+    const button=document.createElement('button');
+    button.className='cell'+(marked.has(i)?' marked':'');
+    button.textContent=name;
+    button.setAttribute('aria-pressed',String(marked.has(i)));
+    button.onclick=()=>{
+      marked.has(i)?marked.delete(i):marked.add(i);
+      draw();
+    };
+    board.append(button);
+  });
+  win.classList.toggle('show',hasLine());
+}
+
+document.querySelector('#begin').onclick=()=>{
+  names=[...entry.querySelectorAll('input')].map(x=>x.value.trim());
+  if(names.some(name=>!name)){
+    alert('Заполни все 16 клеток, чтобы начать игру.');
+    return;
+  }
+  marked.clear();
+  setup.classList.add('hidden');
+  play.classList.remove('hidden');
+  draw();
+};
+
+document.querySelector('#edit').onclick=()=>{
+  setup.classList.remove('hidden');
+  play.classList.add('hidden');
+  entry.querySelectorAll('input').forEach((input,i)=>{
+    input.disabled=false;
+    input.value=names[i];
+  });
+};
+
+document.querySelector('#reset').onclick=()=>{
+  marked.clear();
+  draw();
+};
+</script>
+</body>
+</html>
